@@ -38,7 +38,7 @@ This notebook first displays the location of PROMICE AWSs and calculated the ann
 Then it will extract the satellite pixel values and MODIS albedo prodcut at each AWS site.
 Results will be saved in csv files under the promice folder. 
 ```python
-pointValue = multiSat.getRegion(aoi, 90).getInfo() # The number e.g. 500 
+pointValue = multiSat.getRegion(aoi, 90).getInfo() # The number (e.g. 90 here) is the window size (scale) in meters
 ```
 The number is the window size when extracting pixel values. 
 
