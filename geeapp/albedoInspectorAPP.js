@@ -56,20 +56,6 @@ var demLayer = ui.Map.Layer(arcticDEMgreenland).setName('arctic dem');
 /*
 prepare harmonized satellite data
 */
-function maskS2clouds(image) {
-  var qa = image.select('QA60');
-
-  // Bits 10 and 11 are clouds and cirrus, respectively.
-  var cloudBitMask = 1 << 10;
-  var cirrusBitMask = 1 << 11;
-
-  // Both flags should be set to zero, indicating clear conditions.
-  var mask = qa.bitwiseAnd(cloudBitMask).eq(0)
-      .and(qa.bitwiseAnd(cirrusBitMask).eq(0));
-
-  return image.updateMask(mask).divide(10000).copyProperties(image, ['system:time_start']);
-}
-
 
 // Function to get and rename bands of interest from OLI.
 function renameOli(img) {
@@ -227,6 +213,7 @@ function prepOli(img) {
   img = maskL8sr(img);
   img = oli2oli(img);
   //img = addTotalAlbedo(img);
+  img = imRangeFilter(img);
   img = addVisnirAlbedo(img);
   return ee.Image(img.copyProperties(orig, orig.propertyNames()));
 }
@@ -237,6 +224,7 @@ function prepEtm(img) {
   img = maskL457sr(img);
   img = etm2oli(img);
   //img = addTotalAlbedo(img);
+  img = imRangeFilter(img);
   img = addVisnirAlbedo(img);
   return ee.Image(img.copyProperties(orig, orig.propertyNames()));
 }
@@ -247,6 +235,7 @@ function prepS2(img) {
   img = maskS2sr(img);
   img = s22oli(img);
   // img = addTotalAlbedo(img)
+  img = imRangeFilter(img);
   img = addVisnirAlbedo(img);
   return ee.Image(img.copyProperties(orig, orig.propertyNames()).set('SATELLITE', 'SENTINEL_2'));
 }
