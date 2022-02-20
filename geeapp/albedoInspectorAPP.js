@@ -192,7 +192,7 @@ function maskS2sr(image) {
 // narrow to broadband conversion
 function addVisnirAlbedo(image) {
   var albedo = image.expression(
-    '0.7605 * Blue + 0.8090 * Green - 1.8376 * Red + 0.9145 * NIR + 0.1627',
+    '0.7963 * Blue + 2.2724 * Green - 3.8252 * Red + 1.4143 * NIR + 0.2053',
     {
       'Blue': image.select('Blue'),
       'Green': image.select('Green'),

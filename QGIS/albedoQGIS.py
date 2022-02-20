@@ -38,7 +38,7 @@ aoi = ee.Geometry.Polygon(
 #%% prepare harmonized albedo 
 def addTotalAlbedo(image):
     albedo = image.expression(
-        '1.0065 * Blue + 1.1902 * Green - 2.6738 * Red + 1.1700 * NIR + 0.9211 * SWIR1 - 1.1667 * SWIR2 + 0.1757',
+        '0.8706 * Blue + 2.7889 * Green - 4.6727 * Red + 1.6917 * NIR + 0.0318 * SWIR1 - 0.5348 * SWIR2 + 0.2438',
         {
             'Blue': image.select('Blue'),
             'Green': image.select('Green'),
@@ -52,7 +52,7 @@ def addTotalAlbedo(image):
 
 def addVisnirAlbedo(image):
     albedo = image.expression(
-        '0.7605 * Blue + 0.8090 * Green - 1.8376 * Red + 0.9145 * NIR + 0.1627',
+        '0.7963 * Blue + 2.2724 * Green - 3.8252 * Red + 1.4143 * NIR + 0.2053',
         {
             'Blue': image.select('Blue'),
             'Green': image.select('Green'),
@@ -179,7 +179,7 @@ def maskS2sr(image):
   mask = qa.bitwiseAnd(cloudBitMask).eq(0) \
       .And(qa.bitwiseAnd(cirrusBitMask).eq(0)) 
 
-  return image.updateMask(mask).updateMask(not_saturated)
+  return image.updateMask(mask).updateMask(not_saturated).divide(10000)
 
 
 # Define function to prepare OLI images.
