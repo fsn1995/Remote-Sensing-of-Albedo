@@ -1,10 +1,9 @@
 # Remote Sensing of Albedo on Greenland Ice Sheet with Google Earth Engine
 
 This is a github repo for remote sensing of ice/snow albedo using Google Earth Engine.
-<!-- The manuscript is currently under review.  -->
+The manuscript is currently under review. 
 
-A <b>web application</b> accompaniment to this repository is available at: https://fsn1995.users.earthengine.app/view/AlbedoInspector
-This web app allows users to extract time series of albedo and load the albedo maps freely in-browser.
+A <b>web application</b> accompaniment to this repository is available [here](https://fsn1995.users.earthengine.app/view/AlbedoInspector). This web app allows users to extract time series of albedo and load the albedo maps freely in-browser.
 
 ## Background
 
