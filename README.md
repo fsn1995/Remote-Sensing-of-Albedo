@@ -1,5 +1,8 @@
 # Remote Sensing of Albedo on Greenland Ice Sheet with Google Earth Engine
 
+[![DOI](https://zenodo.org/badge/432758968.svg)](https://zenodo.org/badge/latestdoi/432758968)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Ffsn1995%2FRemote-Sensing-of-Albedo&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
 This is a github repo for remote sensing of ice/snow albedo using Google Earth Engine.
 The manuscript is currently under review. 
 
