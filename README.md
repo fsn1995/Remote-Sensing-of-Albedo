@@ -3,7 +3,7 @@
 This is a github repo for remote sensing of ice/snow albedo using Google Earth Engine.
 The manuscript is currently under review. 
 
-A <b>web application</b> accompaniment to this repository is available [here](https://fsn1995.users.earthengine.app/view/AlbedoInspector). This web app allows users to extract time series of albedo and load the albedo maps freely in-browser.
+A <b>web application</b> accompaniment to this repository is available [here](https://fsn1995.users.earthengine.app/view/albedoinspector). This web app allows users to extract time series of albedo and load the albedo maps freely in-browser.
 
 ## Background
 
@@ -17,7 +17,7 @@ We will harmonize the Landsat Level 2 Collection 2 Tier 1 surface reflectance an
 
 #### Paired pixels
 - script\L7ToL8.js
-- script\S2TOL8.js
+- script\S2ToL8.js
 
 The first step is to obtain the paired pixels for Landsat 7 vs Landsat 8 and Sentinel 2 vs Landsat 8 respectively.
 Simply copy paste all lines of code into earth engine code editor: [https://code.earthengine.google.com/](https://code.earthengine.google.com/).
