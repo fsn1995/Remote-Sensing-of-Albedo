@@ -3,13 +3,20 @@
 This is a github repo for remote sensing of ice/snow albedo using Google Earth Engine.
 <!-- The manuscript is currently under review.  -->
 
-A web application is available at: . 
-It allows users to extract time series of albedo and load the albedo maps freely.
+A <b>web application</b> accompaniment to this repository is available at: https://fsn1995.users.earthengine.app/view/AlbedoInspector
+This web app allows users to extract time series of albedo and load the albedo maps freely in-browser.
 
-## Processing 
+## Background
+
+This repository relates to the harmonization of Landsat and Sentinel-2 data and the development of a new narrowband to broadband conversion algorithm, both optimized to perform well across the Greenland Ice Sheet's melting zone - an area where previous data products have underperformed. The target area is the western coast of the Greenland Ice Sheet where a dark stripe forms each year due to the growth of algae on the ice surface, with as yet unquantified impacts on global sea level rise. The tools in this repository allow for long time-series of the albedo in this zone to be generated so that new insights into its spatio-temporal dynamics can be extracted.
+
+## How to use 
+
+### Data Processing 
+
 We will harmonize the Landsat Level 2 Collection 2 Tier 1 surface reflectance and Sentinel-2 MSI: MultiSpectral Instrument, Level-2A products and calculate the broadband albedo. 
 
-### Paired pixels
+#### Paired pixels
 - script\L7ToL8.js
 - script\S2TOL8.js
 
@@ -17,7 +24,7 @@ The first step is to obtain the paired pixels for Landsat 7 vs Landsat 8 and Sen
 Simply copy paste all lines of code into earth engine code editor: [https://code.earthengine.google.com/](https://code.earthengine.google.com/).
 Paired images would be batch exported to Google Drive using the batch tools developed by Rodrigo E. Principe: https://github.com/fitoprincipe/geetools-code-editor/wiki. 
 
-### Band to band regression
+#### Band to band regression
 - script\regressionCompareL7L8.ipynb
 - script\regressionCompareS2L8.ipynb
 
@@ -31,7 +38,7 @@ RMA was calculated using the python package from https://github.com/OceanOptics/
 
 It would accelerate the processing by converting tif files to vaex dataframe in hdf5 format. The optional script and notebook here might be a good example. 
 
-### Narrow to broadband converstion
+#### Narrow to broadband converstion
 - script\promicegee.ipynb
 
 This notebook first displays the location of PROMICE AWSs and calculated the annual velocity based on the GPS record.
@@ -50,14 +57,14 @@ Narrow to Broadband Conversion formula converts the surface reflectance to broad
 
 This notebook evaluates the MODIS albedo product by comparing with PROMICE AWS albedo. 
 
-## Analysis and Mapping
-### Albedo Dynamics
+### Analysis and Mapping
+#### Albedo Dynamics
 - script\darkzonePoint.ipynb
 - script\darkzone.ipynb
 
 Jupyter notebooks that investigate the albedo dynamics in the dark zone at both point and spatial scale. 
 
-### Albedo Mapping with QGIS
+#### Albedo Mapping with QGIS
 - QGIS\albedoQGIS.py
 
 This part of script is to compare the spatial resolution of harmonized Landsat and Sentinel 2
@@ -79,3 +86,48 @@ date_end = ee.Date.fromYMD(2015, 8, 15)
 
 Then user could make a publication ready map by QGIS. 
 Congrats! 
+
+
+## Directory Structure
+
+This project is organized into three main directories. `geemap` contains the javascript code for our web application. `QGIS` contains materials relating to our GIS work using QGIS. `script` contains jupyter notebooks, python and javascript scripts and related datasets for users to replicate our work. `media` is a repository for images and html for rendering our web app. 
+
+```
+├── geeapp
+│   └── albedoInspectorAPP.js
+├── LICENSE
+├── media
+│   ├── geeapp.png
+│   ├── qgis_editor.png
+│   ├── qgis_pybutton.png
+│   ├── satelliteMission.html
+│   └── satelliteSpectra.html
+├── QGIS
+│   ├── albedocolorbar.svg
+│   ├── albedoMap.qgz
+│   ├── albedoQGIS.py
+│   └── colorbar_horizontal.svg
+├── README.md
+└── script
+    ├── darkzone.ipynb
+    ├── darkzonePoint.ipynb
+    ├── geopyfsn.py
+    ├── L7ToL8.js
+    ├── promice
+    │   ├── promice.csv
+    │   └── promice.xlsx
+    ├── promicegee.ipynb
+    ├── Promice vs satellite.ipynb
+    ├── Promice vs satellite modis.ipynb
+    ├── pylr2
+    │   └── regress2.py
+    ├── regressionCompareL7L8.ipynb
+    ├── regressionCompareS2L8.ipynb
+    ├── regressionEvaluation.ipynb
+    ├── S2TOL8.js
+    └── tif2hdf5.py
+
+```
+
+## Permissions
+Please cite Feng et al (in review) if this code or any downstream version of it is used to support a publication.
