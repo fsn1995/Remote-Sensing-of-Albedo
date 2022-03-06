@@ -21,25 +21,25 @@ arcticDEMgreenland = arcticDEM.updateMask(greenlandmask)
 visPara = {'min': 0,  'max': 3000.0, 'palette': ['0d13d8', '60e1ff', 'ffffff']}
 Map.addLayer(arcticDEMgreenland.select('elevation'), visPara, 'arctic dem')
 
-# %%
+# %% define k transect
 ktransect = ee.Geometry.LineString(
     [[-50.1, 67.083333], [-48, 67.083333]]
 )
 Map.addLayer(ktransect, {}, 'ktransect')
 Map.center_object(ktransect, zoom=8)
 
-# %%
+# %% get the elevation profile
 elevTransect = arcticDEMgreenland.reduceRegion(**{
     'reducer': ee.Reducer.toList(),
     'geometry': ktransect,
     'scale': 10,
     'tileScale': 6
 })
-df = pd.DataFrame(elevTransect.getInfo())
-# %%
+dfdem = pd.DataFrame(elevTransect.getInfo())
+# %% plot the profile
 sns.set_theme()
-df = df.sort_values("longitude")
-df.plot.area(x="longitude", y='elevation')
+dfdem = dfdem.sort_values("longitude")
+dfdem.plot.area(x="longitude", y='elevation')
 
 
 
@@ -213,19 +213,19 @@ def landsatStdDev(image):
     std3 = albedo.reduceNeighborhood(**{
         'reducer': ee.Reducer.stdDev(),
         'kernel': ee.Kernel.square(3)
-    }).rename('std3')
+    }).rename('std3') # dummy
     std5 = albedo.reduceNeighborhood(**{
         'reducer': ee.Reducer.stdDev(),
         'kernel': ee.Kernel.square(5)
-    }).rename('std5')
+    }).rename('std5') # dummy
     std9 = albedo.reduceNeighborhood(**{
         'reducer': ee.Reducer.stdDev(),
-        'kernel': ee.Kernel.square(9)
-    }).rename('std9')
+        'kernel': ee.Kernel.square(3)
+    }).rename('std9') # to match with s2
     std15 = albedo.reduceNeighborhood(**{
         'reducer': ee.Reducer.stdDev(),
-        'kernel': ee.Kernel.square(15)
-    }).rename('std15')
+        'kernel': ee.Kernel.square(5)
+    }).rename('std15') # to match with s2
     return image.addBands([std3, std5, std9, std15])    
 
 def s2StdDev(image):
@@ -302,14 +302,60 @@ s2colFilter =  ee.Filter.And(
 oliCol = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2') \
             .filter(colFilter) \
             .map(prepOli) \
-            .select(['Blue', 'Green', 'Red', 'NIR', 'visnirAlbedo']) 
+            .select(['visnirAlbedo']) \
+            .map(landsatStdDev) \
+            .sort('system:time_start', True) 
 
 s2Col = ee.ImageCollection('COPERNICUS/S2_SR') \
             .filter(s2colFilter) \
             .map(prepS2) \
-            .select(['Blue', 'Green', 'Red', 'NIR', 'visnirAlbedo']) \
+            .select(['visnirAlbedo']) \
+            .map(s2StdDev) \
             .sort('system:time_start', True) 
 
+# %% transect values from 2019 to 2021
+oliList = oliCol.toList(oliCol.size())
+for i in range(oliCol.size().getInfo()):
+  
+  img = ee.Image(oliList.get(i)).addBands(latLonImg)
+  transectMask = img.select('visnirAlbedo').gt(0) # keep only valid values
+  transectDaily = img.updateMask(transectMask).reduceRegion(**{
+  'reducer': ee.Reducer.toList(),
+  'geometry': ktransect,
+  'scale': 30,
+  'tileScale': 6
+  })
+  df = pd.DataFrame(transectDaily.getInfo()).sort_values("longitude")
 
+  df['time'] = img.get('system:time_start').getInfo()
+  df['satellite'] = 'Landsat'
+
+  print("This is the: %.0f Landsat image" % i)
+
+  if i==0:
+    df.to_csv("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/ktransect.csv", 
+              mode='w', index=False, header=True)
+  else:
+    df.to_csv("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/ktransect.csv", 
+              mode='a', index=False, header=False)
+
+s2List = s2Col.toList(s2Col.size())
+for i in range(s2Col.size().getInfo()):
+  img = ee.Image(s2List.get(i)).addBands(latLonImg)
+  transectMask = img.select('visnirAlbedo').gt(0) # keep only valid values
+  transectDaily = img.updateMask(transectMask).reduceRegion(**{
+  'reducer': ee.Reducer.toList(),
+  'geometry': ktransect,
+  'scale': 10,
+  'tileScale': 6
+  })
+  df = pd.DataFrame(transectDaily.getInfo()).sort_values("longitude")
+  
+  df['time'] = img.get('system:time_start').getInfo()
+  df['satellite'] = 'Sentinel2'
+  print("This is the: %.0f S2 image" % i)
+
+  df.to_csv("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/ktransect.csv", 
+            mode='a', index=False, header=False)
 
 # %%
