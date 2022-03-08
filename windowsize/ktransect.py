@@ -44,11 +44,14 @@ dfdem.plot.area(x="longitude", y='elevation')
 
 
 # %%
-date_start = ee.Date.fromYMD(2019,1,1)
-date_end = ee.Date.fromYMD(2021,12,31)
 '''
 get the albedo profile
 '''
+
+
+date_start = ee.Date.fromYMD(2019,1,1)
+date_end = ee.Date.fromYMD(2021,12,31)
+
 # %%
 rmaCoefficients = {
   'itcpsL7': ee.Image.constant([-0.0084, -0.0065, 0.0022, -0.0768, -0.0314, -0.0022]),
