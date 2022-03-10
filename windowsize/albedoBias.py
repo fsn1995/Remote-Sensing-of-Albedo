@@ -17,7 +17,7 @@ from sklearn.metrics import mean_squared_error
 # df = pd.read_csv('/data/shunan/github/Remote-Sensing-of-Albedo/script/promice/promice.csv')
 # df['Longitude'] = df['Longitude'] * -1
 
-# folderpath = "/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/multiSat150m"
+# folderpath = "/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/multiSat90m"
 
 # searchCriteria = "*.csv"
 # globInput = os.path.join(folderpath, searchCriteria)
@@ -47,16 +47,16 @@ from sklearn.metrics import mean_squared_error
 #     dfmerge = pd.merge_asof(dfr.sort_values('datetime'), dfs.dropna().sort_values('datetime'), on='datetime',allow_exact_matches=False, tolerance=pd.Timedelta(hours=1),direction='nearest' )
 #     # dfmerge = pd.merge_asof(dfr.sort_values('datetime'), dfs, on='datetime', tolerance=pd.Timedelta(hours=1) )
 #     if i==0:
-#         dfmerge.to_csv('/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/promice vs satellite150m.csv', mode='w', index=False)
+#         dfmerge.to_csv('/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/promice vs satellite90m.csv', mode='w', index=False)
 #     else:
-#         dfmerge.to_csv('/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/promice vs satellite150m.csv', mode='a', index=False, header=False)
+#         dfmerge.to_csv('/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/promice vs satellite90m.csv', mode='a', index=False, header=False)
 # %% 
 #  Plot
 # 
 # 
 # # %% different scales
 
-df = pd.read_csv('/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/promice vs satellite150m.csv').dropna()
+df = pd.read_csv('/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/promice vs satellite90m.csv').dropna()
 slope, intercept, r_value, p_value, std_err = stats.linregress(df.visnirAlbedo, df["Albedo_theta<70d"])
 df['bias'] = df["visnirAlbedo"] - df["Albedo_theta<70d"]
 df.datetime = pd.to_datetime(df.datetime)
@@ -69,8 +69,10 @@ g = sns.jointplot(x="visnirAlbedo", y="Albedo_theta<70d", data=df, kind="hist",
 g.ax_joint.axline((0, 0), (1, 1), linewidth=1, color='k', linestyle='--')                       
 g.plot_joint(sns.regplot, color='r', scatter=False)
 g.set_axis_labels(xlabel="visnir albedo", ylabel="PROMICE albedo")
-g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/albedo150m.png",
+g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/albedo90m.png",
             dpi=300, bbox_inches="tight")
+g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/albedo90m.pdf",
+            dpi=300, bbox_inches="tight")            
 print('ALL: \ny={0:.4f}x+{1:.4f}\nr_value:{2:.2f} \np:{3:.3f} \nstd_err:{4:.4f}'
       .format(slope,intercept,r_value,p_value, std_err))
 print('Total RMSE is %.4f' % (mean_squared_error(df["Albedo_theta<70d"], df["visnirAlbedo"], squared=False)))
@@ -87,8 +89,8 @@ g.refline(y=0)
 #             horizontalalignment='left', verticalalignment='top',
 #             )
 
-g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/bias150m.png",
-            dpi=600, bbox_inches="tight")
+g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/bias90m.png",
+            dpi=600, bbox_inches="tight")        
 # %% ryan 2017 
 
 df = df[(df.Station=="KAN_L") | (df.Station=="KAN_M") | (df.Station=="KAN_U") ]
@@ -181,7 +183,7 @@ g = sns.FacetGrid(data=df.sort_values("Station"), col="Station", col_wrap=2,
 g.map(sns.regplot, "doy", "bias")
 g.add_legend()
 g.refline(y=0)    
-g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/KANbias150m.png",
+g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/KANbias90m.png",
             dpi=300, bbox_inches="tight")
 
 #%%
@@ -189,7 +191,7 @@ sns.set_theme(style="darkgrid", font="Arial", font_scale=2)
 g = sns.FacetGrid(data=df, col="Station", col_wrap=2, height=6)
 g.map(sns.regplot, "visnirAlbedo", "bias")
 g.refline(y=0)    
-g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/KANbiasLinear150m.png",
+g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/KANbiasLinear90m.png",
             dpi=300, bbox_inches="tight")
 
 dfsubset = df[df.Station=="KAN_L"]
