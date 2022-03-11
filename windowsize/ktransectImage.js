@@ -1,6 +1,9 @@
 // prepare mask
 var greenlandmask = ee.Image('OSU/GIMP/2000_ICE_OCEAN_MASK')
                       .select('ice_mask').eq(1); //'ice_mask', 'ocean_mask'
+var ktransect = ee.Geometry.LineString(
+    [[-50.1, 67.083333], [-48, 67.083333]]
+); 
 
 
 /*
@@ -199,16 +202,44 @@ var blue_fluorite = ["#291b32", "#2a1b34", "#2b1b34", "#2d1c36", "#2f1c38", "#30
 var vis = {min: 0, max: 1, palette: blue_fluorite};
 
 
-var l8img = prepOli(ee.Image('LANDSAT/LC08/C02/T1_L2/LC08_007013_20200822')).updateMask(greenlandmask);
+var l8img = prepOli(ee.Image('LANDSAT/LC08/C02/T1_L2/LC08_007013_20200721')).updateMask(greenlandmask);
+var s2img = prepS2(ee.Image('COPERNICUS/S2_SR/20200721T144921_20200721T144924_T22WEV')).updateMask(greenlandmask);
 
 // Compute standard deviation (SD) as texture of the NDVI.
-var texture = l8img.select('visnirAlbedo').reduceNeighborhood({
+var l8texture = l8img.select('visnirAlbedo').reduceNeighborhood({
     reducer: ee.Reducer.stdDev(),
-    kernel: ee.Kernel.square(7), //default units in pixels
+    kernel: ee.Kernel.square(3), //default units in pixels
   });
 
-  
+// Compute standard deviation (SD) as texture of the NDVI.
+var s2texture = s2img.select('visnirAlbedo').reduceNeighborhood({
+  reducer: ee.Reducer.stdDev(),
+  kernel: ee.Kernel.square(9), //default units in pixels
+});  
+var poi = ee.Geometry.Point(-48.8355, 67.067);
 
-Map.addLayer(l8img.select('visnirAlbedo'), vis, 'albedo');
-Map.addLayer(texture, {min: 0, max: 0.3}, 'SD of albedo');
+Map.addLayer(l8img.select('visnirAlbedo'), vis, 'l8albedo');
+Map.addLayer(s2img.select('visnirAlbedo'), vis, 's2albedo');
+// Map.addLayer(l8texture, {min: 0, max: 0.3}, 'SD of l8albedo');
+// Map.addLayer(s2texture, {min: 0, max: 0.3}, 'SD of s2albedo');
+Map.addLayer(poi, {}, 'kamm');
+Map.addLayer(ktransect, {}, 'k-transect');
 
+// Export the image, specifying the CRS, transform, and region.
+Export.image.toDrive({
+  image: l8img.select('visnirAlbedo'),
+  description: 'l8img',
+  // crs: projection.crs,
+  // crsTransform: projection.transform,
+  // region: geometry
+});
+
+
+// Export the image, specifying the CRS, transform, and region.
+Export.image.toDrive({
+  image: s2img.select('visnirAlbedo'),
+  description: 's2img',
+  // crs: projection.crs,
+  // crsTransform: projection.transform,
+  // region: geometry
+});

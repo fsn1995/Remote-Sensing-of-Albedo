@@ -1,7 +1,7 @@
 # %%
 import pandas as pd
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from scipy import stats
 import seaborn as sns
 
@@ -33,41 +33,25 @@ albedo90m = pd.read_csv(listCSV[4]).dropna()
 albedo150m = pd.read_csv(listCSV[5]).dropna()
 
 #%%
-stat, p = stats.levene(albedo60m.visnirAlbedo, albedo150m.visnirAlbedo)
+stat, p = stats.levene(albedo20m.visnirAlbedo, albedo10m.visnirAlbedo)
 
 # stat, p = stats.levene(albedo10m.visnirAlbedo, albedo20m.visnirAlbedo, albedo30m.visnirAlbedo,
 #                        albedo60m.visnirAlbedo, albedo90m.visnirAlbedo, albedo150m.visnirAlbedo)
 p
 
-#%%
+# %% make a diagonal correlation matrix plot
+# https://seaborn.pydata.org/examples/many_pairwise_correlations.html
 
+df = pd.read_excel("windowsize.xlsx", sheet_name="levene", index_col=[0])
 
-#%%
-# albedomatrix = np.full([5139, len(listCSV)], np.nan)
+mask = np.triu(np.ones_like(df, dtype=bool))
+sns.set_theme(style="white", font="Arial", font_scale=2)
+fig, ax = plt.subplots(figsize=(9,7))
 
-# i=0
-# for csvfile in listCSV:
-#     df = pd.read_csv(csvfile).dropna
-#     print(len(df.visnirAlbedo))
-#     # albedomatrix[0:len(df.visnirAlbedo), i] = df.visnirAlbedo
-#     i += 1
-# %%
-# stat, p = stats.bartlett(albedomatrix[:,0], albedomatrix[:,1], albedomatrix[:,2], 
-#                          albedomatrix[:,3], albedomatrix[:,4], albedomatrix[:,5])
-# stat, p = stats.bartlett(albedomatrix[:,1], albedomatrix[:,2], 
-#                          albedomatrix[:,3], albedomatrix[:,4])
+cmap = sns.diverging_palette(240, 10, as_cmap=True)
 
-# stat, p = stats.levene(albedomatrix[:,0], albedomatrix[:,1], albedomatrix[:,2], 
-#                        albedomatrix[:,3], albedomatrix[:,4], albedomatrix[:,5])          
-# 
-p               
-# %%
-# Generate a large random dataset
-from string import ascii_letters
-rs = np.random.RandomState(33)
-d = pd.DataFrame(data=rs.normal(size=(100, 26)),
-                 columns=list(ascii_letters[26:]))
-
-# Compute the correlation matrix
-corr = d.corr()
+# Draw the heatmap with the mask and correct aspect ratio
+sns.heatmap(df, mask=mask, cmap=cmap, vmin=0, vmax=1, center=0, annot=True, annot_kws={"size": "small"},
+            square=True, linewidths=.5, cbar_kws={"shrink": .8, "label": "Levene's test p-value"}, ax=ax)
+fig.savefig("print/leveneHeatmap.pdf", dpi=300, bbox_inches="tight")            
 # %%
