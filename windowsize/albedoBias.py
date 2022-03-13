@@ -6,7 +6,7 @@ import glob
 from scipy import stats
 import seaborn as sns
 from sklearn.metrics import mean_squared_error
-
+import numpy as np
 
 # %%
 
@@ -56,11 +56,69 @@ from sklearn.metrics import mean_squared_error
 # 
 # # %% different scales
 
-df = pd.read_csv('/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/promice vs satellite90m.csv').dropna()
+df = pd.read_csv('promice/promice vs satellite150m.csv').dropna()
 slope, intercept, r_value, p_value, std_err = stats.linregress(df.visnirAlbedo, df["Albedo_theta<70d"])
 df['bias'] = df["visnirAlbedo"] - df["Albedo_theta<70d"]
 df.datetime = pd.to_datetime(df.datetime)
 df['doy'] = df['datetime'].dt.dayofyear
+
+def nse(simulations, evaluation):
+    """Nash-Sutcliffe Efficiency (NSE) as per `Nash and Sutcliffe, 1970
+    <https://doi.org/10.1016/0022-1694(70)90255-6>`_.
+    :Calculation Details:
+        .. math::
+           E_{\\text{NSE}} = 1 - \\frac{\\sum_{i=1}^{N}[e_{i}-s_{i}]^2}
+           {\\sum_{i=1}^{N}[e_{i}-\\mu(e)]^2}
+        where *N* is the length of the *simulations* and *evaluation*
+        periods, *e* is the *evaluation* series, *s* is (one of) the
+        *simulations* series, and *μ* is the arithmetic mean.
+    https://github.com/ThibHlln/hydroeval/tree/v0.1.0
+    Thibault Hallouin, 2021. hydroeval: an evaluator for streamflow time series in Python. https://doi.org/10.5281/zenodo.4709652        
+    """
+    nse_ = 1 - (
+            np.sum((evaluation - simulations) ** 2, axis=0, dtype=np.float64)
+            / np.sum((evaluation - np.mean(evaluation)) ** 2, dtype=np.float64)
+    )
+
+    return nse_
+
+def ioa(simulations, evaluation):
+    """Index of agreement
+    
+    """
+    ioa_ = 1 - (
+            np.sum((evaluation - simulations) ** 2, axis=0, dtype=np.float64)
+            / np.sum(
+                  (np.abs(simulations - np.mean(evaluation)) + np.abs(evaluation - np.mean(evaluation))) ** 2,
+            dtype=np.float64)
+    )
+
+    return ioa_
+
+def nse_modified(simulations, evaluation, j):
+    """Nash-Sutcliffe Efficiency (NSE) Modified
+    10.5194/adgeo-5-89-2005
+    """
+    nse_modified_ = 1 - (
+            np.sum(
+                  (np.abs(evaluation - simulations)) ** j , axis=0, dtype=np.float64
+            )
+            / np.sum(
+                  (np.abs(evaluation - np.mean(evaluation))) ** j , dtype=np.float64
+            )
+    )
+
+    return nse_modified_
+
+
+nsecoefficient = nse(df["visnirAlbedo"].values, df["Albedo_theta<70d"].values)  
+ioad = ioa(df["visnirAlbedo"].values, df["Albedo_theta<70d"].values)  
+nsem = nse_modified(df["visnirAlbedo"].values, df["Albedo_theta<70d"].values, 1)  
+kge_, r, alpha, beta = kge(df["visnirAlbedo"].values, df["Albedo_theta<70d"].values)
+
+print("nse coefficient is %.4f" % nsecoefficient)
+print("index of agreement is %.4f" % ioad)
+print("nse modified is %.4f" % nsem)
 
 #%% different scale plots
 sns.set_theme(style="darkgrid", font="Arial", font_scale=2)
