@@ -17,7 +17,7 @@ import numpy as np
 # df = pd.read_csv('/data/shunan/github/Remote-Sensing-of-Albedo/script/promice/promice.csv')
 # df['Longitude'] = df['Longitude'] * -1
 
-# folderpath = "/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/multiSat90m"
+# folderpath = "promice/multiSat150m"
 
 # searchCriteria = "*.csv"
 # globInput = os.path.join(folderpath, searchCriteria)
@@ -47,9 +47,9 @@ import numpy as np
 #     dfmerge = pd.merge_asof(dfr.sort_values('datetime'), dfs.dropna().sort_values('datetime'), on='datetime',allow_exact_matches=False, tolerance=pd.Timedelta(hours=1),direction='nearest' )
 #     # dfmerge = pd.merge_asof(dfr.sort_values('datetime'), dfs, on='datetime', tolerance=pd.Timedelta(hours=1) )
 #     if i==0:
-#         dfmerge.to_csv('/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/promice vs satellite90m.csv', mode='w', index=False)
+#         dfmerge.to_csv('promice/promice vs satellite150m.csv', mode='w', index=False)
 #     else:
-#         dfmerge.to_csv('/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/promice vs satellite90m.csv', mode='a', index=False, header=False)
+#         dfmerge.to_csv('promice/promice vs satellite150m.csv', mode='a', index=False, header=False)
 # %% 
 #  Plot
 # 
@@ -57,6 +57,10 @@ import numpy as np
 # # %% different scales
 
 df = pd.read_csv('promice/promice vs satellite150m.csv').dropna()
+
+# # if the scale is less than 150m, filter out landsat 
+# df = df[df.satellite == 'Sentinel2']
+
 slope, intercept, r_value, p_value, std_err = stats.linregress(df.visnirAlbedo, df["Albedo_theta<70d"])
 df['bias'] = df["visnirAlbedo"] - df["Albedo_theta<70d"]
 df.datetime = pd.to_datetime(df.datetime)
@@ -112,13 +116,16 @@ def nse_modified(simulations, evaluation, j):
 
 
 nsecoefficient = nse(df["visnirAlbedo"].values, df["Albedo_theta<70d"].values)  
+nsecoefficientLog = nse(np.log(df["visnirAlbedo"].values), np.log(df["Albedo_theta<70d"].values))
+
 ioad = ioa(df["visnirAlbedo"].values, df["Albedo_theta<70d"].values)  
 nsem = nse_modified(df["visnirAlbedo"].values, df["Albedo_theta<70d"].values, 1)  
-kge_, r, alpha, beta = kge(df["visnirAlbedo"].values, df["Albedo_theta<70d"].values)
 
 print("nse coefficient is %.4f" % nsecoefficient)
+print("nse coefficient (log) is %.4f" % nsecoefficientLog)
 print("index of agreement is %.4f" % ioad)
 print("nse modified is %.4f" % nsem)
+
 
 #%% different scale plots
 sns.set_theme(style="darkgrid", font="Arial", font_scale=2)
@@ -127,10 +134,10 @@ g = sns.jointplot(x="visnirAlbedo", y="Albedo_theta<70d", data=df, kind="hist",
 g.ax_joint.axline((0, 0), (1, 1), linewidth=1, color='k', linestyle='--')                       
 g.plot_joint(sns.regplot, color='r', scatter=False)
 g.set_axis_labels(xlabel="visnir albedo", ylabel="PROMICE albedo")
-g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/albedo90m.png",
+g.savefig("promice/albedo150m.png",
             dpi=300, bbox_inches="tight")
-g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/albedo90m.pdf",
-            dpi=300, bbox_inches="tight")            
+# g.savefig("promice/albedo150m.pdf",
+#             dpi=300, bbox_inches="tight")            
 print('ALL: \ny={0:.4f}x+{1:.4f}\nr_value:{2:.2f} \np:{3:.3f} \nstd_err:{4:.4f}'
       .format(slope,intercept,r_value,p_value, std_err))
 print('Total RMSE is %.4f' % (mean_squared_error(df["Albedo_theta<70d"], df["visnirAlbedo"], squared=False)))
@@ -147,7 +154,7 @@ g.refline(y=0)
 #             horizontalalignment='left', verticalalignment='top',
 #             )
 
-g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/bias90m.png",
+g.savefig("promice/bias150m.png",
             dpi=600, bbox_inches="tight")        
 # %% ryan 2017 
 
@@ -241,7 +248,7 @@ g = sns.FacetGrid(data=df.sort_values("Station"), col="Station", col_wrap=2,
 g.map(sns.regplot, "doy", "bias")
 g.add_legend()
 g.refline(y=0)    
-g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/KANbias90m.png",
+g.savefig("promice/KANbias150m.png",
             dpi=300, bbox_inches="tight")
 
 #%%
@@ -249,7 +256,7 @@ sns.set_theme(style="darkgrid", font="Arial", font_scale=2)
 g = sns.FacetGrid(data=df, col="Station", col_wrap=2, height=6)
 g.map(sns.regplot, "visnirAlbedo", "bias")
 g.refline(y=0)    
-g.savefig("/data/shunan/github/Remote-Sensing-of-Albedo/windowsize/promice/KANbiasLinear90m.png",
+g.savefig("promice/KANbiasLinear150m.png",
             dpi=300, bbox_inches="tight")
 
 dfsubset = df[df.Station=="KAN_L"]

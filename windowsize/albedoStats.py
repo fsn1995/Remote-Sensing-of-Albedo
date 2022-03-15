@@ -52,6 +52,6 @@ cmap = sns.diverging_palette(240, 10, as_cmap=True)
 
 # Draw the heatmap with the mask and correct aspect ratio
 sns.heatmap(df, mask=mask, cmap=cmap, vmin=0, vmax=1, center=0, annot=True, annot_kws={"size": "small"},
-            square=True, linewidths=.5, cbar_kws={"shrink": .8, "label": "Levene's test p-value"}, ax=ax)
+            square=True, linewidths=.5, cbar_kws={"shrink": .8, "label": "Brown-Forsythe test p-value"}, ax=ax)
 fig.savefig("print/leveneHeatmap.pdf", dpi=300, bbox_inches="tight")            
 # %%
