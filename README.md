@@ -1,16 +1,26 @@
 # Remote Sensing of Albedo on Greenland Ice Sheet with Google Earth Engine
 
-[![DOI](https://zenodo.org/badge/432758968.svg)](https://zenodo.org/badge/latestdoi/432758968)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6257894.svg)](https://doi.org/10.5281/zenodo.6257894)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Ffsn1995%2FRemote-Sensing-of-Albedo&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 This is a github repo for remote sensing of ice/snow albedo using Google Earth Engine.
 The manuscript is currently under review. 
 
-A <b>web application</b> accompaniment to this repository is available [here](https://fsn1995.users.earthengine.app/view/albedoinspector). This web app allows users to extract time series of albedo and load the albedo maps freely in-browser.
+A web application ([<b>Albedo Inspector</b>](https://fsn1995.users.earthengine.app/view/albedoinspector)) accompaniment to this repository is available. This web app allows users to extract time series of albedo and load the albedo maps freely in-browser.
 
 ## Background
 
 This repository relates to the harmonization of Landsat and Sentinel-2 data and the development of a new narrowband to broadband conversion algorithm, both optimized to perform well across the Greenland Ice Sheet's melting zone - an area where previous data products have underperformed. The target area is the western coast of the Greenland Ice Sheet where a dark stripe forms each year due to the growth of algae on the ice surface, with as yet unquantified impacts on global sea level rise. The tools in this repository allow for long time-series of the albedo in this zone to be generated so that new insights into its spatio-temporal dynamics can be extracted.
+
+
+## Data Harmonization Tutorial
+- script\harmonizationTutorial.js
+
+Here is a simple tutorial that demonstrates the importance of harmonizing Landsat 4-7 and Sentinel 2 to Landsat 8 time series of datasets.
+It will display the charts of the harmonized satellite albedo (All Observations) and original albedo (All Observations Original).
+The linear trendline will be plotted on a separate chart. 
+
+<img src="media\harmonization.png" alt="harmonization" height=800/>
 
 ## How to use 
 
@@ -114,6 +124,7 @@ This project is organized into three main directories. `geemap` contains the jav
     ├── darkzone.ipynb
     ├── darkzonePoint.ipynb
     ├── geopyfsn.py
+    ├── harmonizationTutorial.js
     ├── L7ToL8.js
     ├── promice
     │   ├── promice.csv
