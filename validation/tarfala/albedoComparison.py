@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # %%
-awsPath = 'AblationAWS\summer'
+awsPath = r'C:\Users\au686295\Desktop\Tarfala\meteorological\AblationAWS\summer'
 searchCriteria = "*.csv"
 
 globInput = os.path.join(awsPath, searchCriteria)
@@ -55,7 +55,27 @@ sns.regplot(data=dfmerge, x='visnirAlbedo', y='albedo')
 ax.set(ylabel='storglaciaren aws albedo')
 ax.set_aspect('equal', 'box')
 
+# %% alternative figure
+df = pd.read_excel("albedomerge.xlsx")
+sns.set_theme(style="darkgrid", font="Arial", font_scale=2)
+g = sns.jointplot(x="visnirAlbedo", y="albedo", data=df, kind="reg", 
+                  height=8, xlim=(0,1), ylim=(0,1)) #, cbar=True, vmin=0, vmax=55
+g.ax_joint.axline((0, 0), (1, 1), linewidth=1, color='k', linestyle='--')                       
+# g.plot_joint(sns.regplot, color='r', scatter=False)
+g.set_axis_labels(xlabel="visnir albedo", ylabel="Storglaciären albedo")
+
+# ref https://stackoverflow.com/a/60849048/13318759
+# get the current positions of the joint ax and the ax for the marginal x
+# pos_joint_ax = g.ax_joint.get_position()
+# pos_marg_x_ax = g.ax_marg_x.get_position()
+# # reposition the joint ax so it has the same width as the marginal x ax
+# g.ax_joint.set_position([pos_joint_ax.x0, pos_joint_ax.y0, pos_marg_x_ax.width, pos_joint_ax.height])
+# # reposition the colorbar using new x positions and y positions of the joint ax
+# g.fig.axes[-1].set_position([.96, pos_joint_ax.y0, .07, pos_joint_ax.height])
+
+g.savefig(r"C:\Users\au686295\Documents\GitHub\PhD\Remote-Sensing-of-Albedo\validation\print\Storglaciären.png",
+            dpi=300, bbox_inches="tight")
+g.savefig(r"C:\Users\au686295\Documents\GitHub\PhD\Remote-Sensing-of-Albedo\validation\print\Storglaciären.pdf",
+            dpi=300, bbox_inches="tight")
+
 # %%
-
-
-

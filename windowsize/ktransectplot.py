@@ -61,6 +61,28 @@ df["month"] = df.datetime.dt.month
 df["day"] = df.datetime.dt.day
 df = df[(df.month>4) & (df.month<10) & (df.visnirAlbedo<1)]
 
+dfnew = df.groupby(by=["year", "longitude"]).mean()
+dfnew.reset_index(inplace=True)
+  
+sns.set_theme(font="Arial", font_scale=2)                 
+fig = sns.relplot(
+    data=dfnew, 
+    x="longitude",
+    y="visnirAlbedo",
+    hue="year",
+    kind="line",
+    height=8,
+    aspect=2,
+)
+figlegend = fig._legend
+figlegend.set_bbox_to_anchor([0.25, 0.8])
+axes = fig.axes.flatten()
+for ax in axes:
+    ax2 = ax.twinx()
+    dfdem.plot(x="longitude", y="elevation", legend=False, ax=ax2)
+    ax2.set(ylabel="elevation m.a.s.l")
+
+fig.savefig("print/ktransectAlbedoProfile.png", dpi=300, bbox_inches="tight")
 # %%
 dfmelt = pd.melt(df, id_vars=["year", "month", "day"],
                  value_vars=["std30m", "std50m", "std90m", "std150m"],

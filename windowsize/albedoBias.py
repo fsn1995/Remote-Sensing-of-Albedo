@@ -2,7 +2,7 @@
 import pandas as pd
 import os
 import glob
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from scipy import stats
 import seaborn as sns
 from sklearn.metrics import mean_squared_error
@@ -17,7 +17,7 @@ import numpy as np
 # df = pd.read_csv('/data/shunan/github/Remote-Sensing-of-Albedo/script/promice/promice.csv')
 # df['Longitude'] = df['Longitude'] * -1
 
-# folderpath = "promice/multiSat150m"
+# folderpath = "promice/multiSat60m"
 
 # searchCriteria = "*.csv"
 # globInput = os.path.join(folderpath, searchCriteria)
@@ -47,18 +47,18 @@ import numpy as np
 #     dfmerge = pd.merge_asof(dfr.sort_values('datetime'), dfs.dropna().sort_values('datetime'), on='datetime',allow_exact_matches=False, tolerance=pd.Timedelta(hours=1),direction='nearest' )
 #     # dfmerge = pd.merge_asof(dfr.sort_values('datetime'), dfs, on='datetime', tolerance=pd.Timedelta(hours=1) )
 #     if i==0:
-#         dfmerge.to_csv('promice/promice vs satellite150m.csv', mode='w', index=False)
+#         dfmerge.to_csv('promice/promice vs satellite60m.csv', mode='w', index=False)
 #     else:
-#         dfmerge.to_csv('promice/promice vs satellite150m.csv', mode='a', index=False, header=False)
+#         dfmerge.to_csv('promice/promice vs satellite60m.csv', mode='a', index=False, header=False)
 # %% 
 #  Plot
 # 
 # 
 # # %% different scales
 
-df = pd.read_csv('promice/promice vs satellite150m.csv').dropna()
+df = pd.read_csv('promice/promice vs satellite60m.csv').dropna()
 
-# # if the scale is less than 150m, filter out landsat 
+# # if the scale is less than 60m, filter out landsat 
 # df = df[df.satellite == 'Sentinel2']
 
 slope, intercept, r_value, p_value, std_err = stats.linregress(df.visnirAlbedo, df["Albedo_theta<70d"])
@@ -130,13 +130,23 @@ print("nse modified is %.4f" % nsem)
 #%% different scale plots
 sns.set_theme(style="darkgrid", font="Arial", font_scale=2)
 g = sns.jointplot(x="visnirAlbedo", y="Albedo_theta<70d", data=df, kind="hist", 
-                  height=8, xlim=(0,1), ylim=(0,1))
+                  height=8, xlim=(0,1), ylim=(0,1), cbar=True, vmin=0, vmax=55)
 g.ax_joint.axline((0, 0), (1, 1), linewidth=1, color='k', linestyle='--')                       
 g.plot_joint(sns.regplot, color='r', scatter=False)
 g.set_axis_labels(xlabel="visnir albedo", ylabel="PROMICE albedo")
-g.savefig("promice/albedo150m.png",
+
+# ref https://stackoverflow.com/a/60849048/13318759
+# get the current positions of the joint ax and the ax for the marginal x
+pos_joint_ax = g.ax_joint.get_position()
+pos_marg_x_ax = g.ax_marg_x.get_position()
+# reposition the joint ax so it has the same width as the marginal x ax
+g.ax_joint.set_position([pos_joint_ax.x0, pos_joint_ax.y0, pos_marg_x_ax.width, pos_joint_ax.height])
+# reposition the colorbar using new x positions and y positions of the joint ax
+g.fig.axes[-1].set_position([.96, pos_joint_ax.y0, .07, pos_joint_ax.height])
+
+g.savefig("promice/albedo60m.png",
             dpi=300, bbox_inches="tight")
-# g.savefig("promice/albedo150m.pdf",
+# g.savefig("promice/albedo60m.pdf",
 #             dpi=300, bbox_inches="tight")            
 print('ALL: \ny={0:.4f}x+{1:.4f}\nr_value:{2:.2f} \np:{3:.3f} \nstd_err:{4:.4f}'
       .format(slope,intercept,r_value,p_value, std_err))
@@ -154,7 +164,7 @@ g.refline(y=0)
 #             horizontalalignment='left', verticalalignment='top',
 #             )
 
-g.savefig("promice/bias150m.png",
+g.savefig("promice/bias60m.png",
             dpi=600, bbox_inches="tight")        
 # %% ryan 2017 
 
@@ -244,11 +254,11 @@ df = df[(df.Station=="KAN_L") | (df.Station=="KAN_M")]
 
 sns.set_theme(style="darkgrid", font="Arial", font_scale=2)
 g = sns.FacetGrid(data=df.sort_values("Station"), col="Station", col_wrap=2, 
-                 legend_out=True, size=6)
+                 legend_out=True, height=6)
 g.map(sns.regplot, "doy", "bias")
 g.add_legend()
 g.refline(y=0)    
-g.savefig("promice/KANbias150m.png",
+g.savefig("promice/KANbias60m.png",
             dpi=300, bbox_inches="tight")
 
 #%%
@@ -256,7 +266,7 @@ sns.set_theme(style="darkgrid", font="Arial", font_scale=2)
 g = sns.FacetGrid(data=df, col="Station", col_wrap=2, height=6)
 g.map(sns.regplot, "visnirAlbedo", "bias")
 g.refline(y=0)    
-g.savefig("promice/KANbiasLinear150m.png",
+g.savefig("promice/KANbiasLinear60m.png",
             dpi=300, bbox_inches="tight")
 
 dfsubset = df[df.Station=="KAN_L"]
