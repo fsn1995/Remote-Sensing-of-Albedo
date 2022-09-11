@@ -1,0 +1,262 @@
+# %%
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.set_theme(style="darkgrid")
+
+# %% [markdown]
+# ## Parlung Glacier
+
+# %%
+df = pd.read_excel("E:\insituAWS\parlung_tibet_2016.xlsx")
+df.head()
+
+# %%
+
+df["datetime"] = pd.to_datetime(df.date) + pd.DateOffset(hours=-8)
+df["albedoRaw"] = df.sout / df.sin
+
+index = (df.sin > 0) & (df.sout > 0) & (df.albedoRaw < 1) 
+df = df[index]
+
+# %%
+df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "High Mountain Asia"
+df["site"] = "Parlung Glacier No. 4"
+df.to_csv("awsAlbedo.csv", mode="w", index=False)
+
+# %% [markdown]
+# ## Haig Glacier
+
+# %%
+df = pd.read_excel("E:\insituAWS\HaigAWS_daily_2002_2015_gapfilled.xlsx", skiprows=6)
+df.head()
+
+# %%
+
+df["datetime"] = pd.to_datetime(df['Year'] * 1000 + df['Day'], format='%Y%j')
+df["albedoRaw"] = df.albedo
+df = df[df["       flag"] == 1] 
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "North America"
+df["site"] = "Haig Glacier"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
+
+
+
+# %% [markdown]
+# # %% Djankuat AWS1
+df = pd.read_csv("E:\insituAWS\Djankuat_AWS1_hourly.tab", skiprows=20, delimiter="\t")
+df.rename(columns={
+    "Date/Time": "datetime",
+    "SWD [W/m**2]": "SWD",
+    "SWU [W/m**2]": "SWU"
+},
+inplace = True)
+df.head()
+# %%
+df["datetime"] = pd.to_datetime(df.datetime) + pd.DateOffset(hours=-4)
+df["albedoRaw"] = df.SWU / df.SWD
+
+index = (df.SWU > 0) & (df.SWD > 0) & (df.albedoRaw < 1) 
+df = df[index]
+df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "North Caucasus"
+df["site"] = "Djankuat AWS1"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
+# %% [markdown]
+# %% Djankuat AWS2
+df = pd.read_csv("E:\insituAWS\Djankuat_AWS2_hourly.tab", skiprows=20, delimiter="\t")
+df.rename(columns={
+    "Date/Time": "datetime",
+    "SWD [W/m**2]": "SWD",
+    "SWU [W/m**2]": "SWU"
+},
+inplace = True)
+df.head()
+# %%
+df["datetime"] = pd.to_datetime(df.datetime) + pd.DateOffset(hours=-4)
+df["albedoRaw"] = df.SWU / df.SWD
+
+index = (df.SWU > 0) & (df.SWD > 0) & (df.albedoRaw < 1) 
+df = df[index]
+df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "North Caucasus"
+df["site"] = "Djankuat AWS2"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
+# %% [markdown]
+# %% Kwadacha Glacier 
+
+# %%
+df = pd.read_excel("E:\insituAWS\Kwadacha_GlacierAWS_2008_2011.xlsx", 
+                    skiprows=[0,1,2,3,4,5,6,7,8,9,11])               
+df.rename(
+    columns={
+        "Unnamed: 0": "datetime",
+        "  QS_in": "SWI",
+        "  QS_out": "SWO"
+    },
+    inplace=True
+)
+# df.drop(0, inplace=True)
+df["datetime"] = df["datetime"].apply(pd.to_datetime, errors='coerce') + pd.DateOffset(hours=+8)  
+df[["SWI", "SWO"]] = df[["SWI", "SWO"]].apply(pd.to_numeric, errors='coerce')       
+df.head()   
+
+# %%
+
+# df["datetime"] = pd.to_datetime(df.date)
+df["albedoRaw"] = df.SWO / df.SWI
+
+index = (df.SWO > 0) & (df.SWI > 0) & (df.albedoRaw < 1) 
+df = df[index]
+df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "North America"
+df["site"] = "Kwadacha Glacier"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
+# %% [markdown]
+# %% Shallap glacier
+df = pd.read_csv("E:\insituAWS\Shallap_data.csv", skiprows=1, delimiter=";")
+df.rename(
+    columns={
+        "rawdate": "datetime",
+        "swin": "SWI",
+        "swout": "SWO"
+    },
+    inplace=True
+)
+
+df.head()
+# %%
+df["datetime"] = pd.to_datetime(df.datetime) + pd.DateOffset(hours=+5)  
+df["albedoRaw"] = df.SWO / df.SWI
+
+index = (df.SWI > 0) & (df.SWO > 0) & (df.albedoRaw < 1) 
+df = df[index]
+df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+sns.lineplot(data=df, x="datetime", y="tilt__y") 
+# maybe exclude data when tilt is too much?
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "South America"
+df["site"] = "Shallap glacier"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
+# %% [markdown]
+# %% Artesonraju glacier
+df = pd.read_csv("E:\insituAWS\Artesonraju glacier.csv", skiprows=1, delimiter=";")
+df.rename(
+    columns={
+        "rawdate": "datetime",
+        "swin": "SWI",
+        "swout": "SWO"
+    },
+    inplace=True
+)
+
+df.head()
+# %%
+df["datetime"] = pd.to_datetime(df.datetime) + pd.DateOffset(hours=+5)  
+df["albedoRaw"] = df.SWO / df.SWI
+
+index = (df.SWI > 0) & (df.SWO > 0) & (df.albedoRaw < 1) 
+df = df[index]
+df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+sns.lineplot(data=df, x="datetime", y="tilt__x") 
+sns.lineplot(data=df, x="datetime", y="tilt__y") 
+# maybe exclude data when tilt is too much?
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "South America"
+df["site"] = "Artesonraju glacier"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
+
+# %% [markdown]
+# %% Yala glacier
+df = pd.read_csv("E:\insituAWS\AWSYalaGlacier.csv")
+df.rename(
+    columns={
+        "DATE": "datetime",
+        "KINC": "SWI",
+        "KOUT": "SWO"
+    },
+    inplace=True
+)
+
+df.head()
+# %%
+df["datetime"] = pd.to_datetime(df['datetime'] + ' ' + df['TIME']) + pd.DateOffset(hours=-5)  
+df["albedoRaw"] = df.SWO / df.SWI
+
+index = (df.SWI > 0) & (df.SWO > 0) & (df.albedoRaw < 1) 
+df = df[index]
+df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "High Mountain Asia"
+df["site"] = "Yala glacier"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
+

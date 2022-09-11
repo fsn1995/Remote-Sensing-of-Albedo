@@ -70,76 +70,114 @@ ax2.YAxis.TickLabelFormat = '%.0f';
 t.TileSpacing = 'compact';
 t.Padding = 'compact';
 
-exportgraphics(t, 'KANalbedo.png', 'Resolution',300);
-exportgraphics(t, 'KANalbedo.pdf', 'Resolution',300);
-%% Derive statistics from GLCM
+% exportgraphics(t, 'KANalbedo.png', 'Resolution',300);
+% exportgraphics(t, 'KANalbedo.pdf', 'Resolution',300);
+
+%% Derive statistics from GLCM and Plot
 % l8offset = 3;
 % s2offset = 9;
 offsetsh = [zeros(27,1) (1:27)'];
 offsetsv = [(1:27)' zeros(27,1)];
 
+s2resample = imresize(s2, 1/3, "bilinear"); % default is bicubic but it will produce pixel values outside the original range.
+% figure, imshow(l8), figure, imshow(s2resample);
+
+%% GLCM Plot Homogeneity
 % horizontal offset
 glcml8 = graycomatrix(l8, 'Offset',offsetsh);
 glcms2 = graycomatrix(s2, 'Offset',offsetsh);
+glcms2resample = graycomatrix(s2resample, 'Offset', offsetsh);
 
 statsl8 = graycoprops(glcml8, "all");
 statss2 = graycoprops(glcms2, "all");
+statss2resample = graycoprops(glcms2resample, "all");
 
+statsl8.Homogeneity(10:end) = nan;
+statss2resample.Homogeneity(10:end) = nan;
+% boxplot([statsl8.Homogeneity' statss2resample.Homogeneity' statss2.Homogeneity'], ["L8" "S2 resampled" "S2"])
+[h,p,ci,stats] = ttest2(statsl8.Homogeneity, statss2resample.Homogeneity)
+
+
+% GLCM Plot Homogeneity
 f = figure;
 f.Position = [50 50 800 400]; 
 
+% index = 3:3:27;
 t = tiledlayout(2,2);
 nexttile
-plot([statsl8.Homogeneity], LineWidth=2, Marker="*");
-title('Homogeneity of L8','FontSize', 12);
+plot(statsl8.Homogeneity, LineWidth=2, Marker="*", DisplayName="L8");
+hold on
+plot(statss2resample.Homogeneity, LineWidth=2, Marker="*", DisplayName="S2 resampled");
+% title('Homogeneity of L8','FontSize', 12);
 xlabel('Horizontal Offset (number of pixels)','FontSize', 12)
 ylabel('Homogeneity','FontSize', 12)
 text(0.90,0.90,'a)','Units','normalized','FontSize',12)
 xlim([1 9])
-ylim([0.84 0.94])
+ylim([0.84 0.96])
+legend('Location','southwest')
 grid on
 
 nexttile
-plot([statss2.Homogeneity], LineWidth=2, Marker="*");
-title('Homogeneity of S2','FontSize', 12);
+plot(statss2.Homogeneity, LineWidth=2, Marker="*", Color='#4DBEEE', DisplayName="S2");
+% title('Homogeneity of S2','FontSize', 12);
 xlabel('Horizontal Offset (number of pixels)','FontSize', 12)
 % ylabel('Homogeneity')
 text(0.90,0.90,'c)','Units','normalized','FontSize',12)
 xlim([1 27])
-ylim([0.84 0.94])
+ylim([0.84 0.96])
+legend('Location','southwest')
 grid on
 
 % vertical offset
 glcml8 = graycomatrix(l8, 'Offset',offsetsv);
 glcms2 = graycomatrix(s2, 'Offset',offsetsv);
+glcms2resample = graycomatrix(s2resample, 'Offset', offsetsv);
 
 statsl8 = graycoprops(glcml8, "all");
 statss2 = graycoprops(glcms2, "all");
+statss2resample = graycoprops(glcms2resample, "all");
+
+
+statsl8.Homogeneity(10:end) = nan;
+statss2resample.Homogeneity(10:end) = nan;
+% boxplot([statsl8.Homogeneity' statss2resample.Homogeneity' statss2.Homogeneity'], ["L8" "S2 resampled" "S2"])
+[h,p,ci,stats] = ttest2(statsl8.Homogeneity, statss2resample.Homogeneity)
+
 
 
 nexttile
-plot([statsl8.Homogeneity], LineWidth=2, Marker="*");
+plot(statsl8.Homogeneity, LineWidth=2, Marker="*", DisplayName='L8');
+hold on
+plot(statss2resample.Homogeneity, LineWidth=2, Marker="*", DisplayName="S2 resampled");
 % title('Homogeneity as a function of offset l8');
 xlabel('Vertical Offset (number of pixels)','FontSize', 12)
 ylabel('Homogeneity','FontSize', 12)
 text(0.90,0.90,'b)','Units','normalized','FontSize',12)
 xlim([1 9])
-ylim([0.84 0.94])
+ylim([0.84 0.96])
+legend('Location','southwest')
 grid on
 
 nexttile
-plot([statss2.Homogeneity], LineWidth=2, Marker="*");
+plot([statss2.Homogeneity], LineWidth=2, Marker="*", Color='#4DBEEE', DisplayName="S2");
 % title('Homogeneity as a function of offset s2');
 xlabel('Vertical Offset (number of pixels)','FontSize', 12)
 % ylabel('Homogeneity')
 text(0.90,0.90,'d)','Units','normalized','FontSize',12)
 xlim([1 27])
-ylim([0.84 0.94])
+ylim([0.84 0.96])
+legend('Location','southwest')
 grid on
 
 t.TileSpacing = 'compact';
 t.Padding = 'compact';
 
-exportgraphics(t, 'KANglcms.png', 'Resolution',300);
-exportgraphics(t, 'KANglcms.pdf', 'Resolution',300);
+% exportgraphics(t, 'KANglcms.png', 'Resolution',300);
+% exportgraphics(t, 'KANglcms.pdf', 'Resolution',300);
+
+%% statistics of the homogeneity 
+statsl8.Homogeneity(10:end) = nan;
+statss2resample.Homogeneity(10:end) = nan;
+boxplot([statsl8.Homogeneity' statss2resample.Homogeneity' statss2.Homogeneity'], ["L8" "S2 resampled" "S2"])
+[h,p,ci,stats] = ttest2(statsl8.Homogeneity, statss2resample.Homogeneity)
 

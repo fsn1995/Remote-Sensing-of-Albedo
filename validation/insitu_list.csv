@@ -1,0 +1,7 @@
+Site,Lat,Lon,Region,URL,Access Date,Reference,Note,Date Start,Date End,k,b,r,p,nse,nse(log),ioad,nsem
+Parlung Glacier No. 4,29.252,96.932,High Mountain Asia,http://data.tpdc.ac.cn/en/data/68b96cdc-cb00-484b-8fad-423bccbc2043/,,,"UTC+8, only 1 point",2016-06-05,2016-10-04,0.8629,0.1644,0.8,0.031,0.3173,-0.16,0.8127,0.2083
+Yala glacier,28.23,85.62,High Mountain Asia,https://doi.org/10.26066/RDS.1972507,,,UTC+5,2016-05-27,2019-12-31,,,,,,,,
+Haig Glacier,50.7124,-115.3018,North America,https://borealisdata.ca/dataset.xhtml?persistentId=doi:10.5683/SP2/7CXPPI,,,daily,2002-01-01,2015-12-31,1.2362,-0.0621,0.71,0.005,0.4818,0.4616,0.7765,0.3999
+Djankuat AWS1,43.198,42.757,North Caucasus,https://doi.pangaea.de/10.1594/PANGAEA.894807,,,UTC+4,2007-06-15,2017-09-01,0.9419,0.0176,0.68,0,0.4542,0.3931,0.7961,0.2718
+Shallap glacier,-9.48924416,-77.3381,SouthAmerica,https://acinn-data.uibk.ac.at/pages/shallap-glacier.html,,,UTC-5,2010-07-25,2012-09-18,1.1306,-0.0542,0.75,0.013,0.5536,0.7159,0.8164,0.5056
+Storglaciären,67.903,18.5726,Scandinavian,,,,,,,,,,,,,,
