@@ -35,7 +35,7 @@ function maskL8sr(image) {
   var saturationMask = image.select('QA_RADSAT').eq(0);
 
   // Apply the scaling factors to the appropriate bands.
-  var opticalBands = image.select('SR_B.');
+  var opticalBands = image.select('SR_B.').multiply(0.0000275).add(-0.2);
   // var opticalBands = image.select('SR_B.').multiply(0.0000275).add(-0.2);
   // var thermalBands = image.select('ST_B.*').multiply(0.00341802).add(149.0);
 
