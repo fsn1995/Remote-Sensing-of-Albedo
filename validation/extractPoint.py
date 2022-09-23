@@ -7,13 +7,39 @@
 import geemap
 import ee
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+import plotly.express as px
 
+#%% map of aws sites
+df = pd.read_excel("insitu_list.xlsx", sheet_name="awsList")
+
+
+fig = plt.figure(figsize=(12, 8), edgecolor='w')
+m = Basemap(projection='mill', resolution=None,
+            llcrnrlat=-85, urcrnrlat=85,
+            llcrnrlon=-180, urcrnrlon=180)
+m.bluemarble(scale=0.5);     
+m.scatter(df.Lon, df.Lat, latlon=True, label=df.Site)    
+# draw parallels and meridians.
+# label parallels on right and top
+# meridians on bottom and left
+parallels = np.arange(-90,90,30);
+# labels = [left,right,top,bottom]
+m.drawparallels(parallels,labels=[False,True,True,False], color="w");
+meridians = np.arange(0,360,30);
+m.drawmeridians(meridians,labels=[True,False,False,True], color="w");
+#%%
+df = pd.read_excel("insitu_list.xlsx", sheet_name="awsList")
+fig = px.scatter_geo(df, lat="Lat", lon="Lon", color="Region",projection="natural earth")
+fig.show()
 # %%
-awsLat = 27.843
-awsLon = 86.487
-date_start = '2016-05-16'
-date_end = '2019-11-10'
-pointValueFile = "Trakarding Glacier.csv"
+awsLat = 28.23436667
+awsLon = 85.62083333
+date_start = '2018-11-28'
+date_end = '2019-12-31'
+pointValueFile = "Yala glacier.csv"
 
 # %% [markdown]
 # # GEE
@@ -274,6 +300,7 @@ pointValue = multiSat.getRegion(aoi, 90).getInfo() # The number e.g. 500 is the 
 dfpoint = ee_array_to_df(pointValue, ['visnirAlbedo'])
 
 dfpoint.to_csv(pointValueFile, mode='w', index=False, header=True)
+# dfpoint.to_csv(pointValueFile, mode='a', index=False, header=False)
 
 # %%
 

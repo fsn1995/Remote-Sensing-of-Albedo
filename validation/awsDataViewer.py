@@ -8,7 +8,7 @@ sns.set_theme(style="darkgrid")
 # ## Parlung Glacier
 
 # %%
-df = pd.read_excel("E:\insituAWS\parlung_tibet_2016.xlsx")
+df = pd.read_excel("H:\insituAWS\parlung_tibet_2016.xlsx")
 df.head()
 
 # %%
@@ -37,7 +37,7 @@ df.to_csv("awsAlbedo.csv", mode="w", index=False)
 # ## Haig Glacier
 
 # %%
-df = pd.read_excel("E:\insituAWS\HaigAWS_daily_2002_2015_gapfilled.xlsx", skiprows=6)
+df = pd.read_excel("H:\insituAWS\HaigAWS_daily_2002_2015_gapfilled.xlsx", skiprows=6)
 df.head()
 
 # %%
@@ -61,7 +61,7 @@ df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
 
 # %% [markdown]
 # # %% Djankuat AWS1
-df = pd.read_csv("E:\insituAWS\Djankuat_AWS1_hourly.tab", skiprows=20, delimiter="\t")
+df = pd.read_csv("H:\insituAWS\Djankuat_AWS1_hourly.tab", skiprows=20, delimiter="\t")
 df.rename(columns={
     "Date/Time": "datetime",
     "SWD [W/m**2]": "SWD",
@@ -89,7 +89,7 @@ df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
 
 # %% [markdown]
 # %% Djankuat AWS2
-df = pd.read_csv("E:\insituAWS\Djankuat_AWS2_hourly.tab", skiprows=20, delimiter="\t")
+df = pd.read_csv("H:\insituAWS\Djankuat_AWS2_hourly.tab", skiprows=20, delimiter="\t")
 df.rename(columns={
     "Date/Time": "datetime",
     "SWD [W/m**2]": "SWD",
@@ -120,7 +120,7 @@ df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
 # %% Kwadacha Glacier 
 
 # %%
-df = pd.read_excel("E:\insituAWS\Kwadacha_GlacierAWS_2008_2011.xlsx", 
+df = pd.read_excel("H:\insituAWS\Kwadacha_GlacierAWS_2008_2011.xlsx", 
                     skiprows=[0,1,2,3,4,5,6,7,8,9,11])               
 df.rename(
     columns={
@@ -158,7 +158,7 @@ df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
 
 # %% [markdown]
 # %% Shallap glacier
-df = pd.read_csv("E:\insituAWS\Shallap_data.csv", skiprows=1, delimiter=";")
+df = pd.read_csv("H:\insituAWS\Shallap_data.csv", skiprows=1, delimiter=";")
 df.rename(
     columns={
         "rawdate": "datetime",
@@ -192,7 +192,7 @@ df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
 
 # %% [markdown]
 # %% Artesonraju glacier
-df = pd.read_csv("E:\insituAWS\Artesonraju glacier.csv", skiprows=1, delimiter=";")
+df = pd.read_csv("H:\insituAWS\Artesonraju glacier.csv", skiprows=1, delimiter=";")
 df.rename(
     columns={
         "rawdate": "datetime",
@@ -228,7 +228,7 @@ df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
 
 # %% [markdown]
 # %% Yala glacier
-df = pd.read_csv("E:\insituAWS\AWSYalaGlacier.csv")
+df = pd.read_csv("H:\insituAWS\AWSYalaGlacier.csv")
 df.rename(
     columns={
         "DATE": "datetime",
@@ -260,3 +260,39 @@ df["site"] = "Yala glacier"
 df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
 
 
+
+# %% [markdown]
+# ## McCall Glacier
+
+# %%
+df = pd.read_excel("H:\insituAWS\JJMC_2004-2014_Cleaned_191007.xlsx", 
+                    sheet_name="JJMC_Table1_Cleaned", skiprows=2)
+df.head()
+
+# %%
+# df["datetime"] = pd.to_datetime(df['year'] * 1000 + df['day'], format='%Y%j')
+index = df.time > 2359
+df.time[index] = 0000
+df["datetime"] = pd.to_datetime(df['year'] * 10000000 + df['day'] * 10000 + df['time'],
+                                format='%Y%j%H%M')+ pd.DateOffset(hours=9)
+
+#%%
+df["albedoRaw"] = df.Albedo
+
+index = (df.Albedo > 0) & (df.Albedo < 1) 
+df = df[index]
+
+# %%
+df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "North America"
+df["site"] = "McCall Glacier"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+# %%

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg268"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="S2L8reg.svg"
+   inkscape:export-filename="C:\Users\au686295\Documents\GitHub\PhD\remote-sensing-of-albedo--development-\final\print\S2L8reg.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title418">LinearRegressionS2L8</title>
+  <sodipodi:namedview
+     id="namedview270"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     showborder="false"
+     inkscape:zoom="0.27496365"
+     inkscape:cx="169.11326"
+     inkscape:cy="587.35036"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs265" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/Nir.jpg"
+       id="image352"
+       x="-151.61031"
+       y="195.79576" />
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/SWIR1.jpg"
+       id="image364"
+       x="43.652184"
+       y="195.79576" />
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/SWIR2.jpg"
+       id="image376"
+       x="238.9149"
+       y="195.79576" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/NIRhist.jpg"
+       id="image388"
+       x="-151.61031"
+       y="363.01178" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/SWIR1hist.jpg"
+       id="image400"
+       x="43.652184"
+       y="363.01178" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/SWIR2hist.jpg"
+       id="image412"
+       x="238.9149"
+       y="363.01178" />
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/Blue.jpg"
+       id="image280"
+       x="-151.61031"
+       y="-41.271137" />
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/Green.jpg"
+       id="image292"
+       x="43.652184"
+       y="-41.271137" />
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/Red.jpg"
+       id="image304"
+       x="238.9149"
+       y="-41.271137" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/Bluehist.jpg"
+       id="image316"
+       x="-151.61031"
+       y="125.94566" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/Greenhist.jpg"
+       id="image328"
+       x="43.652184"
+       y="125.94566" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="S2L8/Redhist.jpg"
+       id="image340"
+       x="238.9149"
+       y="125.94566"
+       inkscape:export-filename="C:\Users\au686295\Documents\GitHub\PhD\remote-sensing-of-albedo--development-\final\print\S2L8reg.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+  </g>
+  <metadata
+     id="metadata416">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>LinearRegressionS2L8</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

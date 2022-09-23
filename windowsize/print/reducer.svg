@@ -7,9 +7,9 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg2793"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
    sodipodi:docname="reducer.svg"
-   inkscape:export-filename="C:\Users\shuna\Documents\GitHub\PhD\Remote-Sensing-of-Albedo\windowsize\print\reducer.png"
+   inkscape:export-filename="reducer.pdf"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -28,16 +28,18 @@
      inkscape:document-units="mm"
      showgrid="false"
      showborder="false"
-     inkscape:zoom="1.0998546"
-     inkscape:cx="237.7587"
-     inkscape:cy="219.57448"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="1912"
+     inkscape:zoom="3.1108586"
+     inkscape:cx="266.16446"
+     inkscape:cy="286.41611"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="g6613"
-     inkscape:snap-text-baseline="false" />
+     inkscape:snap-text-baseline="false"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs2790">
     <rect
@@ -250,12 +252,12 @@
          xml:space="preserve"
          transform="matrix(0.26458333,0,0,0.26458333,-7.6791399,10.150602)"
          id="text11320"
-         style="font-style:normal;font-weight:normal;font-size:26.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect11322);fill:#000000;fill-opacity:1;stroke:none"><tspan
+         style="font-style:normal;font-weight:normal;font-size:26.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect11322);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
            x="234.70508"
-           y="175.35228"
-           id="tspan4599"><tspan
+           y="175.04359"
+           id="tspan622"><tspan
              style="font-family:Arial;-inkscape-font-specification:Arial;fill:#ffffff"
-             id="tspan4597">transect</tspan></tspan></text>
+             id="tspan620">transect</tspan></tspan></text>
       <g
          clip-path="url(#clip0)"
          transform="matrix(0.26458333,0,0,0.26458333,68.214813,12.674743)"
@@ -267,15 +269,10 @@
          y="96.51239"
          id="text25940"><tspan
            sodipodi:role="line"
-           id="tspan25938"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Arial;-inkscape-font-specification:Arial;fill:#4472c4;fill-opacity:1;stroke-width:0.264583"
            x="38.14793"
-           y="96.51239">kernel:</tspan><tspan
-           sodipodi:role="line"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Arial;-inkscape-font-specification:Arial;fill:#4472c4;fill-opacity:1;stroke-width:0.264583"
-           x="38.14793"
-           y="105.41351"
-           id="tspan3232">30m, 90m, 150m</tspan></text>
+           y="96.51239"
+           id="tspan3232">kernel: 30-150m</tspan></text>
     </g>
   </g>
 </svg>
