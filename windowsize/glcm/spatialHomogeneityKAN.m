@@ -70,7 +70,7 @@ ax2.YAxis.TickLabelFormat = '%.0f';
 t.TileSpacing = 'compact';
 t.Padding = 'compact';
 
-% exportgraphics(t, 'KANalbedo.png', 'Resolution',300);
+exportgraphics(t, 'KANalbedo.jpg', 'Resolution',300);
 % exportgraphics(t, 'KANalbedo.pdf', 'Resolution',300);
 
 %% Derive statistics from GLCM and Plot
@@ -94,8 +94,6 @@ statss2resample = graycoprops(glcms2resample, "all");
 
 statsl8.Homogeneity(10:end) = nan;
 statss2resample.Homogeneity(10:end) = nan;
-% boxplot([statsl8.Homogeneity' statss2resample.Homogeneity' statss2.Homogeneity'], ["L8" "S2 resampled" "S2"])
-[h,p,ci,stats] = ttest2(statsl8.Homogeneity, statss2resample.Homogeneity)
 
 
 % GLCM Plot Homogeneity
@@ -140,8 +138,6 @@ statss2resample = graycoprops(glcms2resample, "all");
 
 statsl8.Homogeneity(10:end) = nan;
 statss2resample.Homogeneity(10:end) = nan;
-% boxplot([statsl8.Homogeneity' statss2resample.Homogeneity' statss2.Homogeneity'], ["L8" "S2 resampled" "S2"])
-[h,p,ci,stats] = ttest2(statsl8.Homogeneity, statss2resample.Homogeneity)
 
 
 
@@ -172,12 +168,14 @@ grid on
 t.TileSpacing = 'compact';
 t.Padding = 'compact';
 
-% exportgraphics(t, 'KANglcms.png', 'Resolution',300);
+exportgraphics(t, 'KANglcms.jpg', 'Resolution',300);
 % exportgraphics(t, 'KANglcms.pdf', 'Resolution',300);
 
 %% statistics of the homogeneity 
 statsl8.Homogeneity(10:end) = nan;
 statss2resample.Homogeneity(10:end) = nan;
+figure;
 boxplot([statsl8.Homogeneity' statss2resample.Homogeneity' statss2.Homogeneity'], ["L8" "S2 resampled" "S2"])
 [h,p,ci,stats] = ttest2(statsl8.Homogeneity, statss2resample.Homogeneity)
-
+boxplot([l8(:) s2resample(:)], ["L8" "S2 resampled"])
+[h,p,ci,stats] = ttest2(l8(:), s2resample(:))

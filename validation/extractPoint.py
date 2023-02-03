@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 import plotly.express as px
+import seaborn as sns
 
 #%% map of aws sites
 df = pd.read_excel("insitu_list.xlsx", sheet_name="awsList")
@@ -35,11 +36,11 @@ df = pd.read_excel("insitu_list.xlsx", sheet_name="awsList")
 fig = px.scatter_geo(df, lat="Lat", lon="Lon", color="Region",projection="natural earth")
 fig.show()
 # %%
-awsLat = 28.23436667
-awsLon = 85.62083333
-date_start = '2018-11-28'
-date_end = '2019-12-31'
-pointValueFile = "Yala glacier.csv"
+awsLat = 46.37800701
+awsLon = 7.488334039
+date_start = '2014-07-09'
+date_end = '2017-09-19'
+pointValueFile = "Glacier de la Plaine Morte .csv"
 
 # %% [markdown]
 # # GEE
@@ -251,7 +252,7 @@ def ee_array_to_df(arr, list_of_bands):
 
 # %%
 aoi = ee.Geometry.Point(awsLon, awsLat)
-
+Map.addLayer(aoi)
 # print(date_start)
 
 # create filter for image collection
@@ -275,6 +276,7 @@ oliCol = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2') \
             .select(['visnirAlbedo'])
 etmCol = ee.ImageCollection('LANDSAT/LE07/C02/T1_L2') \
             .filter(colFilter) \
+            .filter(ee.Filter.calendarRange(1999, 2020, 'year'))  \
             .map(prepEtm) \
             .select(['visnirAlbedo'])
 tmCol = ee.ImageCollection('LANDSAT/LT05/C02/T1_L2') \
@@ -285,12 +287,16 @@ tm4Col = ee.ImageCollection('LANDSAT/LT04/C02/T1_L2') \
             .filter(colFilter) \
             .map(prepEtm) \
             .select(['visnirAlbedo'])
-s2Col = ee.ImageCollection('COPERNICUS/S2_SR') \
+s2Col = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED") \
             .filter(s2colFilter) \
             .map(prepS2) \
             .select(['visnirAlbedo'])
+oli2Col = ee.ImageCollection('LANDSAT/LC09/C02/T1_L2') \
+            .filter(colFilter) \
+            .map(prepOli) \
+            .select(['visnirAlbedo'])        
 # landsatCol = etmCol.merge(tmCol)
-landsatCol = oliCol.merge(etmCol).merge(tmCol).merge(tm4Col)
+landsatCol = oliCol.merge(etmCol).merge(tmCol).merge(tm4Col).merge(oli2Col)
 multiSat = landsatCol.merge(s2Col).sort('system:time_start', True) # // Sort chronologically in descending order.
 
 
@@ -303,6 +309,10 @@ dfpoint.to_csv(pointValueFile, mode='w', index=False, header=True)
 # dfpoint.to_csv(pointValueFile, mode='a', index=False, header=False)
 
 # %%
+sns.set_theme(style="darkgrid", font="Arial", font_scale=2)
+dfpoint["datetime"] = pd.to_datetime(dfpoint.datetime)
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=dfpoint, x="datetime", y="visnirAlbedo", markers=True, marker="o")
+ax.set(ylabel="albedo")
 
-
-
+# %%

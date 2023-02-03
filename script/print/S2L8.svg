@@ -7,9 +7,9 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg268"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-   sodipodi:docname="S2L8reg.svg"
-   inkscape:export-filename="C:\Users\au686295\Documents\GitHub\PhD\remote-sensing-of-albedo--development-\final\print\S2L8reg.png"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="S2L8.svg"
+   inkscape:export-filename="S2L8.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -33,17 +33,56 @@
      inkscape:document-units="mm"
      showgrid="false"
      showborder="false"
-     inkscape:zoom="0.27496365"
-     inkscape:cx="169.11326"
-     inkscape:cy="587.35036"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:zoom="0.5499273"
+     inkscape:cx="446.42265"
+     inkscape:cy="777.37548"
+     inkscape:window-width="2400"
+     inkscape:window-height="1271"
+     inkscape:window-x="2391"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
-     id="defs265" />
+     id="defs265">
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232" />
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232-7" />
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232-7-5" />
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232-7-7" />
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232-7-72" />
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232-7-2" />
+  </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
@@ -147,6 +186,54 @@
        inkscape:export-filename="C:\Users\au686295\Documents\GitHub\PhD\remote-sensing-of-albedo--development-\final\print\S2L8reg.png"
        inkscape:export-xdpi="300"
        inkscape:export-ydpi="300" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,8.2325092,3.9991274)"
+       id="text230"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan1225">a)</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,203.69099,4.0094674)"
+       id="text230-4"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232-7);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan1227">b)</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,399.90147,3.9991274)"
+       id="text230-4-1"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232-7-5);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan1229">c)</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,8.2841892,242.17602)"
+       id="text230-4-6"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232-7-7);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan1231">d)</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,204.06823,242.16568)"
+       id="text230-4-63"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232-7-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan1233">e)</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,400.24253,242.17602)"
+       id="text230-4-0"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232-7-2);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan1235">f)</tspan></text>
   </g>
   <metadata
      id="metadata416">

@@ -7,7 +7,7 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
    sodipodi:docname="promicelinearLandsat.svg"
    inkscape:export-filename="C:\Users\au686295\Documents\GitHub\PhD\Remote-Sensing-of-Albedo\windowsize\print\promicelinearLandsat.png"
    inkscape:export-xdpi="300"
@@ -29,14 +29,16 @@
      showgrid="false"
      showborder="false"
      inkscape:zoom="0.5499273"
-     inkscape:cx="126.38034"
-     inkscape:cy="48.188188"
+     inkscape:cx="-435.51211"
+     inkscape:cy="330.95284"
      inkscape:window-width="2560"
      inkscape:window-height="1377"
-     inkscape:window-x="-8"
+     inkscape:window-x="2552"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#ffffff" />
   <defs
      id="defs2">
     <rect
@@ -103,16 +105,16 @@
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect18646-4);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-394.74609"
          y="14.170802"
-         id="tspan1116"><tspan
+         id="tspan3760"><tspan
            style="font-family:Arial;-inkscape-font-specification:Arial"
-           id="tspan1114">b) </tspan></tspan><tspan
+           id="tspan3758">b) </tspan></tspan><tspan
          x="-394.74609"
          y="64.810355"
-         id="tspan1122"><tspan
+         id="tspan3766"><tspan
            style="font-family:Arial;-inkscape-font-specification:Arial"
-           id="tspan1118">2</tspan><tspan
+           id="tspan3762">2</tspan><tspan
            style="font-family:Arial;-inkscape-font-specification:Arial"
-           id="tspan1120">0m</tspan></tspan></text>
+           id="tspan3764">0m</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-2.2434034,-6.7073578)"
@@ -120,13 +122,49 @@
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect18646);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-394.74609"
          y="14.170802"
-         id="tspan1126"><tspan
+         id="tspan3770"><tspan
            style="font-family:Arial;-inkscape-font-specification:Arial"
-           id="tspan1124">a) </tspan></tspan><tspan
+           id="tspan3768">a) </tspan></tspan><tspan
          x="-394.74609"
          y="64.810355"
-         id="tspan1130"><tspan
+         id="tspan3774"><tspan
            style="font-family:Arial;-inkscape-font-specification:Arial"
-           id="tspan1128">10m</tspan></tspan></text>
+           id="tspan3772">10m</tspan></tspan></text>
+    <rect
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:0.518424;stroke-linecap:round;stroke-dasharray:0.518424, 0.518424"
+       id="rect894-4"
+       width="56.393391"
+       height="7.1984382"
+       x="-70.655907"
+       y="137.37018" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:9.17222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-96.379311"
+       y="143.14017"
+       id="text1039-6"><tspan
+         sodipodi:role="line"
+         id="tspan1037-6"
+         x="-96.379311"
+         y="143.14017"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.17222px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.264583">harmonized satellite albedo</tspan></text>
+    <rect
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:0.521601;stroke-linecap:round;stroke-dasharray:0.521601, 0.521601"
+       id="rect894-4-7"
+       width="57.111927"
+       height="7.195261"
+       x="107.64428"
+       y="137.37177" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:9.17222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="83.096947"
+       y="143.14017"
+       id="text1039-6-1"><tspan
+         sodipodi:role="line"
+         id="tspan1037-6-6"
+         x="83.096947"
+         y="143.14017"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.17222px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.264583">harmonized satellite albedo</tspan></text>
   </g>
 </svg>

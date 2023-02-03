@@ -7,8 +7,11 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg225"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
    sodipodi:docname="movingwindow.svg"
+   inkscape:export-filename="movingwindow.jpg"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -20,20 +23,22 @@
      bordercolor="#666666"
      borderopacity="1.0"
      inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="1"
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
      showborder="false"
-     inkscape:zoom="0.73406285"
-     inkscape:cx="-37.462732"
-     inkscape:cy="474.75499"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="1912"
+     inkscape:zoom="1.0381216"
+     inkscape:cx="-146.41829"
+     inkscape:cy="511.50075"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#ffffff" />
   <defs
      id="defs222">
     <pattern
@@ -139,20 +144,20 @@
        id="text11320"
        style="font-style:normal;font-weight:normal;font-size:26.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect11322);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="234.70508"
-         y="175.35228"
-         id="tspan389"><tspan
+         y="175.04359"
+         id="tspan3366"><tspan
            style="font-family:Arial;-inkscape-font-specification:Arial;fill:#ffffff"
-           id="tspan387">transect</tspan></tspan></text>
+           id="tspan3364">transect</tspan></tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;fill:#4472c4;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="19.078093"
-       y="119.49472"
+       x="-25.949657"
+       y="144.34428"
        id="text25940"><tspan
          sodipodi:role="line"
          id="tspan25938"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Arial;-inkscape-font-specification:Arial;fill:#4472c4;fill-opacity:1;stroke-width:0.264583"
-         x="19.078093"
-         y="119.49472">kernel:3</tspan></text>
+         x="-25.949657"
+         y="144.34428">kernel:30-150m</tspan></text>
   </g>
 </svg>

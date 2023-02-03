@@ -295,4 +295,103 @@ df = df[["datetime", "albedo", "albedoRaw"]]
 df["region"] = "North America"
 df["site"] = "McCall Glacier"
 df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
+# %% [markdown]
+# ## Qaanaaq ice cap
+
+# %%
+df = pd.read_csv("H:\insituAWS\SIGMA_AWS_SiteB_2012-2020_Lv1_3.csv", 
+                  usecols=['date', 'albedo', 'daily_integrated_albedo', 'solz_slope'])
+df.head()
+
+# %%
+# df["datetime"] = pd.to_datetime(df['year'] * 1000 + df['day'], format='%Y%j')
+df["datetime"] = pd.to_datetime(df.date)
+
+#%%
+df["albedoRaw"] = df.albedo
+df["albedo"] = df['daily_integrated_albedo']
+index = (df.albedo > 0) & (df.albedo < 1) 
+df = df[index]
+index = (df.albedoRaw > 0) & (df.albedoRaw < 1) 
+df = df[index]
+index = df['solz_slope'] <= 76
+df = df[index]
+# %%
+# df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+# sns.scatterplot(data=df, x="albedo", y="albedoRaw")
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+# sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "Greenland"
+df["site"] = "Qaanaaq ice cap"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
+# %% [markdown]
+# ## Hintereisferner
+
+# %% 
+df = pd.read_csv(r"C:\Users\au686295\Downloads\acinn_data_Hintereisferner_RAW_05881cef\data.csv", 
+                  skiprows=1,
+                  usecols=['rawdate', 'swi_avg', 'swo_avg'],
+                  delimiter=";")
+df.head()
+
+# %%
+# df["datetime"] = pd.to_datetime(df['year'] * 1000 + df['day'], format='%Y%j')
+df["datetime"] = pd.to_datetime(df.rawdate) + pd.DateOffset(hours=+1)
+
+#%%
+df["albedoRaw"] = df.swo_avg / df.swi_avg
+index = (df.albedoRaw > 0) & (df.albedoRaw < 1) 
+df = df[index]
+
+# %%
+df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+sns.scatterplot(data=df, x="albedo", y="albedoRaw")
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+# sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "Alps"
+df["site"] = "Hintereisferner"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
+# %% [markdown]
+# ## Glacier de la Plaine Morte 
+
+df = pd.read_excel("H:\insituAWS\PlaineMorte_Meteo_20142017.xlsx")
+df.head()
+
+# %%
+
+df["datetime"] = pd.to_datetime(df.TIMESTAMP) + pd.DateOffset(hours=-1)
+df["albedoRaw"] = df.Albedo
+
+index = (df.albedoRaw > 0) & (df.albedoRaw < 1) 
+df = df[index]
+
+# %%
+df["albedo"] = df.albedoRaw.rolling(5, center=True).mean()
+
+# %%
+fig, ax = plt.subplots(figsize=(10,5))
+sns.lineplot(data=df, x="datetime", y="albedoRaw", label="Raw")
+sns.lineplot(data=df, x="datetime", y="albedo", label="albedo")
+
+# %%
+df = df[["datetime", "albedo", "albedoRaw"]] 
+df["region"] = "Alps"
+df["site"] = "Glacier de la Plaine Morte"
+df.to_csv("awsAlbedo.csv", mode="a", index=False, header=False)
+
 # %%

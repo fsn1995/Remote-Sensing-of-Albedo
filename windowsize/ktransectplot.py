@@ -5,6 +5,7 @@ import ee
 import geemap
 import matplotlib.pyplot as plt
 import numpy as np
+sns.set_theme(font="Arial", font_scale=2, style="darkgrid")   
 
 # %%
 # %% display map
@@ -39,7 +40,7 @@ elevTransect = arcticDEMgreenland.reduceRegion(**{
 })
 dfdem = pd.DataFrame(elevTransect.getInfo())
 # %% plot the profile
-sns.set_theme()
+
 dfdem = dfdem.sort_values("longitude")
 dfdem.plot.area(x="longitude", y='elevation')
 
@@ -64,7 +65,7 @@ df = df[(df.month>4) & (df.month<10) & (df.visnirAlbedo<1)]
 dfnew = df.groupby(by=["year", "longitude"]).mean()
 dfnew.reset_index(inplace=True)
   
-sns.set_theme(font="Arial", font_scale=2)                 
+              
 fig = sns.relplot(
     data=dfnew, 
     x="longitude",
@@ -91,13 +92,13 @@ dfmelt = pd.melt(df, id_vars=["year", "month", "day"],
 
 
 fig, ax = plt.subplots(figsize=(6, 5))                 
-sns.set_theme(font="Arial", font_scale=2)                 
+              
 sns.boxplot(
     data=dfmelt, x="month", y="stddev", hue="scales",
-    ax=ax
+    ax=ax,  notch=True
 )
-plt.legend(bbox_to_anchor=(1.1, 1.3), ncol=2)
-fig.savefig("print/ktransectSTDbox.png", dpi=300, bbox_inches="tight")
+plt.legend(bbox_to_anchor=(1.05, 1.3), ncol=2)
+fig.savefig("print/ktransectSTDbox.pdf", dpi=300, bbox_inches="tight")
 # sns.relplot(
 #     data=df, 
 #     x="longitude",
@@ -117,7 +118,7 @@ df = df[(df.month>5) & (df.month<10) & (df.visnirAlbedo<1)]
 dfnew = df.groupby(by=["year", "month", "longitude"]).mean()
 dfnew.reset_index(inplace=True)
 # %%
-sns.set_theme(font="Arial", font_scale=2)
+
 fig = sns.relplot(
     data=dfnew, 
     x="longitude",

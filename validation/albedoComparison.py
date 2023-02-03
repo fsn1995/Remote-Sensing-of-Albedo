@@ -9,17 +9,17 @@ import seaborn as sns
 sns.set_theme(style="darkgrid")
 # %%
 df= pd.read_csv("awsAlbedo.csv")
-sitename = "Yala glacier"
+sitename = "Glacier de la Plaine Morte "
 df["datetime"] = pd.to_datetime(df.datetime)
 # df['month'] = df["datetime"].dt.month
 # df['year'] = df["datetime"].dt.year
 # df['day'] = df["datetime"].dt.day
-# index = (df['month'] < 10) & (df['month'] > 4) # north of Tropic of Cancer
+# index = (df['month'] < 10) & (df['month'] > 5) # north of Tropic of Cancer
 # # index = (df['month'] < 4) & (df['month'] > 10) # south of Tropic of Capricorn
 # df = df[index]
 
 dfaws = df[df.site == sitename]
-dfalbedo = pd.read_csv("satAlbedo\Yala glacier.csv")
+dfalbedo = pd.read_csv("satAlbedo\Glacier de la Plaine Morte .csv")
 dfalbedo["datetime"] = pd.to_datetime(dfalbedo.datetime)
 
 # %%
@@ -120,7 +120,7 @@ g = sns.jointplot(x="visnirAlbedo", y="albedo", data=dfmerge, kind="reg",
                   height=8, xlim=(0,1), ylim=(0,1)) #, cbar=True, vmin=0, vmax=55
 g.ax_joint.axline((0, 0), (1, 1), linewidth=1, color='k', linestyle='--')                       
 # g.plot_joint(sns.regplot, color='r', scatter=False)
-g.set_axis_labels(xlabel="visnir albedo", ylabel="AWS albedo")
+g.set_axis_labels(xlabel="harmonized satellite albedo", ylabel="AWS albedo")
 
 # ref https://stackoverflow.com/a/60849048/13318759
 # get the current positions of the joint ax and the ax for the marginal x
@@ -131,10 +131,10 @@ g.set_axis_labels(xlabel="visnir albedo", ylabel="AWS albedo")
 # # reposition the colorbar using new x positions and y positions of the joint ax
 # g.fig.axes[-1].set_position([.96, pos_joint_ax.y0, .07, pos_joint_ax.height])
 
-g.savefig(r"C:\Users\au686295\Documents\GitHub\PhD\Remote-Sensing-of-Albedo\validation\print\HMA.png",
+g.savefig(r"C:\Users\au686295\Documents\GitHub\PhD\Remote-Sensing-of-Albedo\validation\print\SIGMA-B.png",
             dpi=300, bbox_inches="tight")
-# g.savefig(r"C:\Users\au686295\Documents\GitHub\PhD\Remote-Sensing-of-Albedo\validation\print\Storglaciären.pdf",
-#             dpi=300, bbox_inches="tight")
+# # g.savefig(r"C:\Users\au686295\Documents\GitHub\PhD\Remote-Sensing-of-Albedo\validation\print\Storglaciären.pdf",
+# #             dpi=300, bbox_inches="tight")
 
 # %%
 fig, ax = plt.subplots(figsize=(15,5))
@@ -149,4 +149,24 @@ sns.lineplot(
     x="datetime",
     y="visnirAlbedo"
 )
+# %%
+
+fig, ax = plt.subplots(figsize=(15,5))
+sns.lineplot(
+    data=dfalbedo,
+    x="datetime",
+    y="visnirAlbedo",
+    label="harmonized satellite albedo",
+    color="orange",
+    markers=True,
+    marker="o"
+)
+plt.plot(dfaws.datetime, dfaws.albedoRaw, label="AWS albedo")
+# plt.plot(dfawsNoTilt.datetime, dfawsNoTilt.albedo, label="AWS albedo (no tilt)")
+plt.xlim(pd.to_datetime("2020-05-10"), pd.to_datetime("2020-09-20"))
+plt.legend()
+ax.set(
+    xlabel="",
+    ylabel="Albedo"
+);
 # %%
