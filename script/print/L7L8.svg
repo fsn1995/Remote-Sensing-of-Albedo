@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="L7L8.svg"
+   inkscape:export-filename="L7L8.pdf"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title155">LinearRegressionL7L8</title>
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     showborder="false"
+     inkscape:zoom="0.5499273"
+     inkscape:cx="355.50154"
+     inkscape:cy="715.54913"
+     inkscape:window-width="2400"
+     inkscape:window-height="1271"
+     inkscape:window-x="2391"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
+  <defs
+     id="defs2">
+    <rect
+       x="-461.87923"
+       y="-85.465842"
+       width="61.826354"
+       height="61.826354"
+       id="rect232" />
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232-7" />
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232-7-5" />
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232-7-7" />
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232-7-72" />
+    <rect
+       x="-461.87924"
+       y="-85.465843"
+       width="61.826355"
+       height="61.826355"
+       id="rect232-7-2" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/Nir.jpg"
+       id="image89"
+       x="-156.3732"
+       y="196.13596" />
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/SWIR1.jpg"
+       id="image101"
+       x="38.88929"
+       y="196.13596" />
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/SWIR2.jpg"
+       id="image113"
+       x="234.15201"
+       y="196.13596" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/NIRhist.jpg"
+       id="image125"
+       x="-156.3732"
+       y="363.35229" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/SWIR1hist.jpg"
+       id="image137"
+       x="38.88929"
+       y="363.35229" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/SWIR2hist.jpg"
+       id="image149"
+       x="234.15201"
+       y="363.35229" />
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/Blue.jpg"
+       id="image17"
+       x="-156.3732"
+       y="-40.930931" />
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/Green.jpg"
+       id="image29"
+       x="38.88929"
+       y="-40.930931" />
+    <image
+       width="203.2"
+       height="177.8"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/Red.jpg"
+       id="image41"
+       x="234.15201"
+       y="-40.930931" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/Bluehist.jpg"
+       id="image53"
+       x="-156.3732"
+       y="126.28587" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/Greenhist.jpg"
+       id="image65"
+       x="38.88929"
+       y="126.28587" />
+    <image
+       width="177.8"
+       height="76.199997"
+       preserveAspectRatio="none"
+       xlink:href="L7L8/Redhist.jpg"
+       id="image77"
+       x="234.15201"
+       y="126.28587" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,3.3678694,2.6458334)"
+       id="text230"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan664">a)</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,198.82634,2.6561687)"
+       id="text230-4"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232-7);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan666">b)</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,395.03682,2.6458334)"
+       id="text230-4-1"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232-7-5);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan668">c)</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,3.4195458,240.82271)"
+       id="text230-4-6"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232-7-7);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan670">d)</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,199.20358,240.81237)"
+       id="text230-4-63"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232-7-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan672">e)</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,395.37788,240.82271)"
+       id="text230-4-0"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect232-7-2);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-461.87891"
+         y="-50.076172"
+         id="tspan674">f)</tspan></text>
+  </g>
+  <metadata
+     id="metadata153">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>LinearRegressionL7L8</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

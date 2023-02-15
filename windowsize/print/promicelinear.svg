@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="promicelinear.svg"
+   inkscape:export-filename="promicelinear.pdf"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     showborder="false"
+     inkscape:zoom="0.5499273"
+     inkscape:cx="702.82018"
+     inkscape:cy="920.12163"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
+  <defs
+     id="defs2">
+    <rect
+       x="-394.74633"
+       y="-21.858917"
+       width="102.86549"
+       height="123.43859"
+       id="rect18646" />
+    <rect
+       x="-394.74634"
+       y="-21.858917"
+       width="102.86549"
+       height="123.43859"
+       id="rect18646-4" />
+    <rect
+       x="-394.74634"
+       y="-21.858917"
+       width="102.86549"
+       height="123.43859"
+       id="rect18646-1" />
+    <rect
+       x="-394.74634"
+       y="-21.858917"
+       width="102.86549"
+       height="123.43859"
+       id="rect18646-2" />
+    <rect
+       x="-394.74634"
+       y="-21.858917"
+       width="102.86549"
+       height="123.43859"
+       id="rect18646-6" />
+    <rect
+       x="-394.74634"
+       y="-21.858917"
+       width="102.86549"
+       height="123.43859"
+       id="rect18646-63" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3172">
+      <rect
+         style="opacity:0.5;fill:#ff0000;stroke:#ffffff;stroke-width:0.0019697;stroke-linecap:round;stroke-dasharray:0, 0.021667"
+         id="rect3174"
+         width="187.05371"
+         height="174.48756"
+         x="-133.11899"
+         y="-33.567505" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3176">
+      <rect
+         style="opacity:0.5;fill:#ff0000;stroke:#ffffff;stroke-width:0.0019697;stroke-linecap:round;stroke-dasharray:0, 0.021667"
+         id="rect3178"
+         width="187.05371"
+         height="174.48756"
+         x="76.346344"
+         y="-33.567493" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3202">
+      <rect
+         style="opacity:0.5;fill:#ff0000;stroke:#ffffff;stroke-width:0.00205352;stroke-linecap:round;stroke-dasharray:0, 0.022589"
+         id="rect3204"
+         width="187.05371"
+         height="189.65334"
+         x="-133.11899"
+         y="140.92006" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3206">
+      <rect
+         style="opacity:0.5;fill:#ff0000;stroke:#ffffff;stroke-width:0.00205352;stroke-linecap:round;stroke-dasharray:0, 0.022589"
+         id="rect3208"
+         width="187.05371"
+         height="189.65334"
+         x="76.346344"
+         y="140.92006" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <image
+       width="209.46533"
+       height="189.65334"
+       preserveAspectRatio="none"
+       xlink:href="../promice/albedo30m.png"
+       id="image991"
+       x="219.13672"
+       y="-37.09177" />
+    <image
+       width="209.46533"
+       height="189.65334"
+       preserveAspectRatio="none"
+       xlink:href="../promice/albedo150m.png"
+       id="image1027"
+       x="219.13672"
+       y="140.92006" />
+    <image
+       width="209.46533"
+       height="189.65334"
+       preserveAspectRatio="none"
+       xlink:href="../promice/albedo20m.png"
+       id="image979"
+       x="76.346344"
+       y="-37.09177"
+       clip-path="url(#clipPath3176)"
+       transform="translate(-33.337515)" />
+    <image
+       width="209.46533"
+       height="189.65334"
+       preserveAspectRatio="none"
+       xlink:href="../promice/albedo90m.png"
+       id="image1015"
+       x="76.346344"
+       y="140.92006"
+       clip-path="url(#clipPath3206)"
+       transform="translate(-33.337515)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,349.79404,1.7593092)"
+       id="text18644-3"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect18646-1);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-394.74609"
+         y="14.170802"
+         id="tspan4060"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4058">c) </tspan></tspan><tspan
+         x="-394.74609"
+         y="64.810355"
+         id="tspan4066"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4062">3</tspan><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4064">0m</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,174.8903,1.7593092)"
+       id="text18644-0"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect18646-4);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-394.74609"
+         y="14.170802"
+         id="tspan4070"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4068">b) </tspan></tspan><tspan
+         x="-394.74609"
+         y="64.810355"
+         id="tspan4076"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4072">2</tspan><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4074">0m</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,350.10927,180.26341)"
+       id="text18644-30"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect18646-2);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-394.74609"
+         y="14.170802"
+         id="tspan4080"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4078">f) </tspan></tspan><tspan
+         x="-394.74609"
+         y="64.810355"
+         id="tspan4084"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4082">150m</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,174.82229,180.26341)"
+       id="text18644-6"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect18646-6);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-394.74609"
+         y="14.170802"
+         id="tspan4088"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4086">e) </tspan></tspan><tspan
+         x="-394.74609"
+         y="64.810355"
+         id="tspan4094"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4090">9</tspan><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4092">0m</tspan></tspan></text>
+    <image
+       width="209.46533"
+       height="189.65334"
+       preserveAspectRatio="none"
+       xlink:href="../promice/albedo60m.png"
+       id="image1003"
+       x="-133.11899"
+       y="140.92006"
+       clip-path="url(#clipPath3202)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,-2.5597296,180.26341)"
+       id="text18644-61"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect18646-63);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-394.74609"
+         y="14.170802"
+         id="tspan4098"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4096">d) </tspan></tspan><tspan
+         x="-394.74609"
+         y="64.810355"
+         id="tspan4104"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4100">6</tspan><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4102">0m</tspan></tspan></text>
+    <image
+       width="209.46533"
+       height="189.65334"
+       preserveAspectRatio="none"
+       xlink:href="../promice/albedo10m.png"
+       id="image967"
+       x="-133.11899"
+       y="-37.09177"
+       clip-path="url(#clipPath3172)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,-2.5804001,1.7593092)"
+       id="text18644"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect18646);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="-394.74609"
+         y="14.170802"
+         id="tspan4108"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4106">a) </tspan></tspan><tspan
+         x="-394.74609"
+         y="64.810355"
+         id="tspan4112"><tspan
+           style="font-family:Arial;-inkscape-font-specification:Arial"
+           id="tspan4110">10m</tspan></tspan></text>
+    <rect
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:0.499999;stroke-linecap:round;stroke-dasharray:0.499999, 0.499999"
+       id="rect894"
+       width="52.322258"
+       height="7.2168632"
+       x="-66.154579"
+       y="320.06787" />
+    <rect
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:0.499999;stroke-linecap:round;stroke-dasharray:0.499999, 0.499999"
+       id="rect894-7"
+       width="52.322258"
+       height="7.2168632"
+       x="110.37459"
+       y="319.24725" />
+    <rect
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:0.499999;stroke-linecap:round;stroke-dasharray:0.499999, 0.499999"
+       id="rect894-4"
+       width="52.322258"
+       height="7.2168632"
+       x="284.10693"
+       y="319.24725" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-91.5028"
+       y="325.8364"
+       id="text1039"><tspan
+         sodipodi:role="line"
+         id="tspan1037"
+         x="-91.5028"
+         y="325.8364"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.264583">harmonized satellite albedo</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="84.875801"
+       y="325.8364"
+       id="text1039-9"><tspan
+         sodipodi:role="line"
+         id="tspan1037-5"
+         x="84.875801"
+         y="325.8364"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.264583">harmonized satellite albedo</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="261.25433"
+       y="325.8364"
+       id="text1039-6"><tspan
+         sodipodi:role="line"
+         id="tspan1037-6"
+         x="261.25433"
+         y="325.8364"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.264583">harmonized satellite albedo</tspan></text>
+  </g>
+</svg>

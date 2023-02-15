@@ -125,3 +125,65 @@ some_dict = {'L8swir2': L8, 'S2swir2': S2}
 swir2 = vx.from_arrays(**some_dict)
 swir2.export_hdf5(r'/data/shunan/data/harmonize_data/202005_08sentinel/swir2.hdf5', progress=True)
 del L8, S2, swir2
+
+
+# %% [markdown]
+# # landsat 9 vs landsat 8
+
+# %%
+
+bluePath = r"/data/shunan/data/harmonize_data/202205_08landsat/blue"
+greenPath = r"/data/shunan/data/harmonize_data/202205_08landsat/green"
+redPath = r"/data/shunan/data/harmonize_data/202205_08landsat/red"
+nirPath = r"/data/shunan/data/harmonize_data/202205_08landsat/nir"
+swir1Path = r"/data/shunan/data/harmonize_data/202205_08landsat/swir1"
+swir2Path = r"/data/shunan/data/harmonize_data/202205_08landsat/swir2"
+
+
+# %%
+L8, L9 = getBandNoFilter(bluePath)
+some_dict = {'L8blue': L8, 'L9blue': L9}
+blue = vx.from_arrays(**some_dict)
+blue.export_hdf5(r'/data/shunan/data/harmonize_data/202205_08landsat/blue.hdf5', progress=True)
+del L8, L9, blue
+
+
+# %%
+L8, L9 = getBandNoFilter(greenPath)
+some_dict = {'L8green': L8, 'L9green': L9}
+green = vx.from_arrays(**some_dict)
+green.export_hdf5(r'/data/shunan/data/harmonize_data/202205_08landsat/green.hdf5', progress=True)
+del L8, L9, green
+
+
+# %%
+L8, L9 = getBandNoFilter(redPath)
+some_dict = {'L8red': L8, 'L9red': L9}
+red = vx.from_arrays(**some_dict)
+red.export_hdf5(r'/data/shunan/data/harmonize_data/202205_08landsat/red.hdf5', progress=True)
+del L8, L9, red
+
+
+# %%
+L8, L9 = getBandNoFilter(nirPath)
+some_dict = {'L8nir': L8, 'L9nir': L9}
+nir = vx.from_arrays(**some_dict)
+nir.export_hdf5(r'/data/shunan/data/harmonize_data/202205_08landsat/nir.hdf5', progress=True)
+del L8, L9, nir
+
+
+# %%
+L8, L9 = getBandNoFilter(swir1Path)
+some_dict = {'L8swir1': L8, 'L9swir1': L9}
+swir1 = vx.from_arrays(**some_dict)
+swir1.export_hdf5(r'/data/shunan/data/harmonize_data/202205_08landsat/swir1.hdf5', progress=True)
+del L8, L9, swir1
+
+
+# %%
+L8, L9 = getBandNoFilter(swir2Path)
+some_dict = {'L8swir2': L8, 'L9swir2': L9}
+swir2 = vx.from_arrays(**some_dict)
+swir2.export_hdf5(r'/data/shunan/data/harmonize_data/202205_08landsat/swir2.hdf5', progress=True)
+del L8, L9, swir2
+# %%

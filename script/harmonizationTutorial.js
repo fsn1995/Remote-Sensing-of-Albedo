@@ -14,6 +14,22 @@ Shunan Feng
 shunan.feng@envs.au.dk
 */
 
+/**
+ * Intial parameters
+ */
+
+var date_start = ee.Date.fromYMD(1984, 1, 1);
+var date_end = date_end = ee.Date(Date.now());
+
+// var aoi = ee.Geometry.Point([-49.3476433532785, 67.0775206116519]);
+var aoi = ee.Geometry.Point([-48.8355, 67.0670]); // change your coordinate here
+
+// Display AOI on the map.
+Map.centerObject(aoi, 4);
+Map.addLayer(aoi, {color: 'f8766d'}, 'AOI');
+Map.setOptions('HYBRID');
+
+
 /*
 prepare harmonized satellite data
 */
@@ -166,6 +182,16 @@ function addVisnirAlbedo(image) {
 
 /* get harmonized image collection */
 
+// Define function to prepare OLI2 images.
+function prepOli2(img) {
+  var orig = img;
+  img = renameOli(img);
+  img = maskL8sr(img);
+  img = oli2oli(img);
+  img = imRangeFilter(img);
+  img = addVisnirAlbedo(img);
+  return ee.Image(img.copyProperties(orig, orig.propertyNames()).set('SATELLITE', 'LANDSAT_9'));
+}
 // Define function to prepare OLI images.
 function prepOli(img) {
   var orig = img;
@@ -208,17 +234,6 @@ function prepS2(img) {
 }
 
 
-var date_start = ee.Date.fromYMD(1984, 1, 1);
-var date_end = ee.Date.fromYMD(2020, 12, 31);
-
-// var aoi = ee.Geometry.Point([-49.3476433532785, 67.0775206116519]);
-var aoi = ee.Geometry.Point([-48.8355, 67.0670]); // KAN_M
-
-// Display AOI on the map.
-Map.centerObject(aoi, 4);
-Map.addLayer(aoi, {color: 'f8766d'}, 'AOI');
-Map.setOptions('HYBRID');
-
 var colFilter = ee.Filter.and(
   ee.Filter.bounds(aoi),
   ee.Filter.date(date_start, date_end)
@@ -232,6 +247,10 @@ var s2colFilter =  ee.Filter.and(
   ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50)
 );
 
+var oli2Col = ee.ImageCollection('LANDSAT/LC09/C02/T1_L2') 
+              .filter(colFilter) 
+              .map(prepOli2)
+              .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 var oliCol = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2') 
               .filter(colFilter) 
               .map(prepOli)
@@ -254,7 +273,7 @@ var s2Col = ee.ImageCollection('COPERNICUS/S2_SR')
             .map(prepS2)
             .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 
-var landsatCol = oliCol.merge(etmCol).merge(tmCol).merge(tm4Col);
+var landsatCol = oliCol.merge(etmCol).merge(tmCol).merge(tm4Col).merge(oli2Col);
 var multiSat = landsatCol.merge(s2Col).sort('system:time_start', true); // Sort chronologically in descending order.
   
 // prepare the chart of harmonized satellite albedo
@@ -273,7 +292,7 @@ var chartAllObs =
       // .setSeriesNames(['TM', 'ETM+', 'OLI', 'S2'])
       .setOptions({
         title: 'All Observations',
-        colors: ['f8766d', '00ba38', '619cff', '8934eb'],
+        colors: ['f8766d', '00ba38', '619cff', '8934eb', 'cf513e'],
         hAxis: {title: 'Date'},
         vAxis: {title: 'visnirAlbedo', viewWindow: {min: 0, max: 1}},
         pointSize: 6,
@@ -301,6 +320,15 @@ print(chartAllObsTrend);
 /*
 Make a new chart for the original dataset. 
 */
+// Define function to prepare OLI images.
+function prepOli2Ori(img) {
+  var orig = img;
+  img = renameOli(img);
+  img = maskL8sr(img);
+  img = imRangeFilter(img);
+  img = addVisnirAlbedo(img);
+  return ee.Image(img.copyProperties(orig, orig.propertyNames()).set('SATELLITE', 'LANDSAT_9'));
+}
 // Define function to prepare OLI images.
 function prepOliOri(img) {
   var orig = img;
@@ -338,6 +366,10 @@ function prepS2Ori(img) {
   return ee.Image(img.copyProperties(orig, orig.propertyNames()).set('SATELLITE', 'SENTINEL_2'));
 }
 
+var oli2ColOri = ee.ImageCollection('LANDSAT/LC09/C02/T1_L2') 
+              .filter(colFilter) 
+              .map(prepOli2Ori)
+              .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 var oliColOri = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2') 
               .filter(colFilter) 
               .map(prepOliOri)
@@ -360,7 +392,7 @@ var s2ColOri = ee.ImageCollection('COPERNICUS/S2_SR')
             .map(prepS2Ori)
             .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 
-var landsatColOri = oliColOri.merge(etmColOri).merge(tmColOri).merge(tm4ColOri);
+var landsatColOri = oliColOri.merge(etmColOri).merge(tmColOri).merge(tm4ColOri).merge(oli2ColOri);
 var multiSatOri = landsatColOri.merge(s2ColOri).sort('system:time_start', true); // Sort chronologically in descending order.
   
 
@@ -379,7 +411,7 @@ var chartAllObsOri =
       // .setSeriesNames(['TM', 'ETM+', 'OLI', 'S2'])
       .setOptions({
         title: 'All Observations Original',
-        colors: ['f8766d', '00ba38', '619cff', '8934eb'],
+        colors: ['f8766d', '00ba38', '619cff', '8934eb', 'cf513e'],
         hAxis: {title: 'Date'},
         vAxis: {title: 'visnirAlbedo', viewWindow: {min: 0, max: 1}},
         pointSize: 6,
