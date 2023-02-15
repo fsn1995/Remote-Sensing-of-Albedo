@@ -4,7 +4,11 @@
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Ffsn1995%2FRemote-Sensing-of-Albedo&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 This is a github repo for remote sensing of ice/snow albedo using Google Earth Engine.
-The manuscript is currently under review. 
+It is part of two studies:
+1. Remote sensing of ice albedo on the GrIS]{Long time series (1984-2020) of albedo variations on the Greenland Ice Sheet from harmonized Landsat and Sentinel 2 imagery. The manuscript is accepted in Journal of Glaciology and will be available shortly. 
+2. Remote sensing of ice albedo using harmonized Landsat and Sentinel 2 datasets: Validation. The manuscript is about to be submitted for peer review. 
+
+Paper 1 focuses on the development of data harmonization and narrow to broad band conversion algorithm optimized for the ablation zone in the Greenland Ice Sheet. The harmonized satellite albedo (HSA) is further validated globally using AWS albedo measurements in paper 2. It also provides a complete workflow of validating remote sensing derived product with groundtruth measurements. 
 
 A web application ([<b>Albedo Inspector</b>](https://fsn1995.users.earthengine.app/view/albedoinspector)) accompaniment to this repository is available. This web app allows users to extract time series of albedo and load the albedo maps freely in-browser.
 
@@ -14,9 +18,9 @@ This repository relates to the harmonization of Landsat and Sentinel-2 data and 
 
 
 ## Data Harmonization Tutorial
-- script\harmonizationTutorial.js
+- [script/harmonizationTutorial.js](script/harmonizationTutorial.js)
 
-Here is a simple tutorial that demonstrates the importance of harmonizing Landsat 4-7 and Sentinel 2 to Landsat 8 time series of datasets.
+Here is a simple tutorial that demonstrates the importance of harmonizing Landsat 4-7, 9 and Sentinel 2 to Landsat 8 time series of datasets.
 It will display the charts of the harmonized satellite albedo (All Observations) and original albedo (All Observations Original).
 The linear trendline will be plotted on a separate chart. 
 
@@ -29,29 +33,31 @@ The linear trendline will be plotted on a separate chart.
 We will harmonize the Landsat Level 2 Collection 2 Tier 1 surface reflectance and Sentinel-2 MSI: MultiSpectral Instrument, Level-2A products and calculate the broadband albedo. 
 
 #### Paired pixels
-- script\L7ToL8.js
-- script\S2ToL8.js
+- [script/L7ToL8.js](script/L7ToL8.js)
+- [script/S2ToL8.js](script/S2ToL8.js)
+- [script/L9ToL8.js](script/L9ToL8.js)
 
-The first step is to obtain the paired pixels for Landsat 7 vs Landsat 8 and Sentinel 2 vs Landsat 8 respectively.
+The first step is to obtain the paired pixels for Landsat 7 vs Landsat 8, Landsat 9 vs Landsat 8, and Sentinel 2 vs Landsat 8 respectively.
 Simply copy paste all lines of code into earth engine code editor: [https://code.earthengine.google.com/](https://code.earthengine.google.com/).
 Paired images would be batch exported to Google Drive using the batch tools developed by Rodrigo E. Principe: https://github.com/fitoprincipe/geetools-code-editor/wiki. 
 
 #### Band to band regression
-- script\regressionCompareL7L8.ipynb
-- script\regressionCompareS2L8.ipynb
+- [script/regressionCompareL7L8.ipynb](script/regressionCompareL7L8.ipynb)
+- [script/regressionCompareS2L8.ipynb](script/regressionCompareS2L8.ipynb)
+- [script/regressionCompareL9L8.ipynb](script/regressionCompareL9L8.ipynb)
 
 Two jupyter notebooks are available for the band to band regression. In this step we read the geotiff files from previous steps and convert the pixel values to vaex dataframe.
 Both Ordinary Least Square (OLS) Regression Model and Reduced Major Axis Regression (RMA) Model.
 RMA was calculated using the python package from https://github.com/OceanOptics/pylr2.
 
 *Optionally*:
-- script\tif2hdf5.py 
-- script\regressionEvaluation.ipynb 
+- [script/tif2hdf5.py](script/tif2hdf5.py)
+- [script/regressionEvaluation.ipynb](script/regressionEvaluation.ipynb)
 
 It would accelerate the processing by converting tif files to vaex dataframe in hdf5 format. The optional script and notebook here might be a good example. 
 
 #### Narrow to broadband converstion
-- script\promicegee.ipynb
+- [script/promicegee.ipynb](script/promicegee.ipynb)
 
 This notebook first displays the location of PROMICE AWSs and calculated the annual velocity based on the GPS record.
 Then it will extract the satellite pixel values and MODIS albedo prodcut at each AWS site.
@@ -61,23 +67,36 @@ pointValue = multiSat.getRegion(aoi, 90).getInfo() # The number (e.g. 90 here) i
 ```
 The number is the window size when extracting pixel values. 
 
-- script\Promice vs satellite.ipynb
+- [script/Promice vs satellite.ipynb](script/Promice%20vs%20satellite.ipynb)
 
 Narrow to Broadband Conversion formula converts the surface reflectance to broadband albedo. We will run multiple linear regression models with different combination of bands. Reference albedo will also be calculated.
 
-- script\Promice vs satellite modis.ipynb
+- [script/Promice vs satellite modis.ipynb](script/Promice%20vs%20satellite%20modis.ipynb)
 
 This notebook evaluates the MODIS albedo product by comparing with PROMICE AWS albedo. 
 
+### Spatial Window Size
+
+The albedo images are exported by [windowsize/ktransectImage.js](windowsize/ktransectImage.js) and used for GLCM analysis [windowsize/glcm](windowsize/glcm).
+The optimal spaital window size is done by following scripts:
+- [windowsize/promiceAlbedo.py](windowsize/promiceAlbedo.py)
+- [windowsize/albedoStats.py](windowsize/albedoStats.py) 
+- [windowsize/albedoBias.py](windowsize/albedoBias.py), where different statistical measures are defined. 
+
+### Validation with global AWS
+
+The validation of albedo consists of 3 steps: 1) extraction of harmonized satellite albedo [validation/extractPoint.py](validation/extractPoint.py); 2) preparation of AWS data [validation/awsDataViewer.py](validation/awsDataViewer.py); and 3) validation [validation/albedoComparison.py](validation/albedoComparison.py).
+Statistical measures such as the Nash-Sutcliffe Efficiency (NSE) and its modified forms, Index of agreement are all avaialble here. 
+
 ### Analysis and Mapping
 #### Albedo Dynamics
-- script\darkzonePoint.ipynb
-- script\darkzone.ipynb
+- [script/darkzonePoint.ipynb](script/darkzonePoint.ipynb)
+- [script/darkzone.ipynb](script/darkzone.ipynb)
 
 Jupyter notebooks that investigate the albedo dynamics in the dark zone at both point and spatial scale. 
 
 #### Albedo Mapping with QGIS
-- QGIS\albedoQGIS.py
+- [QGIS/albedoQGIS.py](QGIS/albedoQGIS.py)
 
 This part of script is to compare the spatial resolution of harmonized Landsat and Sentinel 2
 albedo and MODIS albedo product.
@@ -102,45 +121,101 @@ Congrats!
 
 ## Directory Structure
 
-This project is organized into three main directories. `geemap` contains the javascript code for our web application. `QGIS` contains materials relating to our GIS work using QGIS. `script` contains jupyter notebooks, python and javascript scripts and related datasets for users to replicate our work. `media` is a repository for images and html for rendering our web app. 
+This project is organized into three main directories. `geemap` contains the javascript code for our web application. `QGIS` contains materials relating to our GIS work using QGIS. `script` contains jupyter notebooks, python and javascript scripts and related datasets for users to replicate our work. `windowsize` and `validation` are scripts for determining the optimal window size and validation with global AWS data. `media` is a repository for images and html for rendering our web app. 
 
 ```
-├── geeapp
-│   └── albedoInspectorAPP.js
-├── LICENSE
-├── media
-│   ├── geeapp.png
-│   ├── qgis_editor.png
-│   ├── qgis_pybutton.png
-│   ├── satelliteMission.html
-│   └── satelliteSpectra.html
-├── QGIS
-│   ├── albedocolorbar.svg
-│   ├── albedoMap.qgz
-│   ├── albedoQGIS.py
-│   └── colorbar_horizontal.svg
-├── README.md
-└── script
-    ├── darkzone.ipynb
-    ├── darkzonePoint.ipynb
-    ├── geopyfsn.py
-    ├── harmonizationTutorial.js
-    ├── L7ToL8.js
-    ├── promice
-    │   ├── promice.csv
-    │   └── promice.xlsx
-    ├── promicegee.ipynb
-    ├── Promice vs satellite.ipynb
-    ├── Promice vs satellite modis.ipynb
-    ├── pylr2
-    │   └── regress2.py
-    ├── regressionCompareL7L8.ipynb
-    ├── regressionCompareS2L8.ipynb
-    ├── regressionEvaluation.ipynb
-    ├── S2TOL8.js
-    └── tif2hdf5.py
-
+|   LICENSE
+|   README.md
+|
++---geeapp
+|       albedoInspectorAPP.js
+|
++---media
+|       allobs.svg
+|       allobsori.svg
+|       allobsoritrend.svg
+|       geeapp.png
+|       geeappdownload.png
+|       harmonization.pdf
+|       harmonization.png
+|       qgis_editor.png
+|       qgis_pybutton.png
+|
++---QGIS
+|       albedocolorbar.svg
+|       albedoMap.qgz
+|       albedoQGIS.py
+|       albedoValidation.qgz
+|       arcticdemQGIS.py
+|       colorbar_horizontal.svg
+|
++---script
+|   |   bandtransform.xlsx
+|   |   darkzone.ipynb
+|   |   darkzonePoint.ipynb
+|   |   geopyfsn.py
+|   |   harmonizationTutorial.js        
+|   |   L7ToL8.js
+|   |   L9ToL8.js
+|   |   Promice vs satellite modis.ipynb
+|   |   Promice vs satellite.ipynb      
+|   |   promicegee.ipynb
+|   |   regressionCompareL7L8.ipynb     
+|   |   regressionCompareL9L8.ipynb     
+|   |   regressionCompareS2L8.ipynb     
+|   |   regressionEvaluation.ipynb      
+|   |   S2ToL8.js
+|   |   satmission.py
+|   |   tif2hdf5.py
+|   |
+|   +---promice
+|   |       promice - qgis.csv
+|   |       promice.csv
+|   |       promice.xlsx
+|   |
+|   \---pylr2
+|           regress2.py
+|
++---validation
+|   |   albedoComparison.py
+|   |   albedomergeHMA.csv
+|   |   albedomergeSA.csv
+|   |   awsAlbedo.csv
+|   |   awsDataViewer.py
+|   |   extractPoint.py
+|   |   insitu_list.csv
+|   |   insitu_list.xlsx
+|   |
+\---windowsize
+    |   albedoBias.py
+    |   albedoStats.py
+    |   ktransect.csv
+    |   ktransect.py
+    |   ktransectExtract.js
+    |   ktransectFind.js
+    |   ktransectImage.js
+    |   ktransectplot.py
+    |   ktransectQGIS.py
+    |   l8panCNMF.m
+    |   promiceAlbedo.py
+    |   satellitedate.txt
+    |   stacktif.m
+    |   windowsize.xlsx
+    |
+    +---glcm
+    |       l8albedoKANM.tif
+    |       s2albedoKANM.tif
+    |       spatialHomogeneityKAN.m
+    |
+   
 ```
 
-## Permissions
-Please cite Feng et al (in review) if this code or any downstream version of it is used to support a publication.
+## Citation
+### Publication
+<!-- ```
+
+``` -->
+Paper 1 is now accepted and will be available shortly in Journal of Glaciology.
+Paper 2 is currently under review and will be updated once it's available. 
+### Data
+Note: The doi number is provided by zenodo to cite all versions and will always resolve to the latest one. However, it may be different from the doi number in the publication as those were citing a specific version. 
