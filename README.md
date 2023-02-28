@@ -1,4 +1,4 @@
-# Remote Sensing of Albedo on Greenland Ice Sheet with Google Earth Engine
+# Remote Sensing of Ice Albedo with Google Earth Engine
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6257894.svg)](https://doi.org/10.5281/zenodo.6257894)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Ffsn1995%2FRemote-Sensing-of-Albedo&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
@@ -203,8 +203,6 @@ This project is organized into three main directories. `geemap` contains the jav
     |   windowsize.xlsx
     |
     +---glcm
-    |       l8albedoKANM.tif
-    |       s2albedoKANM.tif
     |       spatialHomogeneityKAN.m
     |
    
