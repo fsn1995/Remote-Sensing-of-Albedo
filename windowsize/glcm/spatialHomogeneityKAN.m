@@ -39,7 +39,7 @@ text(ax1, min(mapx)+100, max(mapy)-300, 'a) L8', 'FontSize',12);
 xlim(ax1, [min(mapx), max(mapx)])
 ylim(ax1, [min(mapy), max(mapy)])
 set(gca,'TickDir','out');
-
+scalebarpsn('location','se');
 ax2 = nexttile;
 [s2, xb, yb, Is2] = geoimread("s2albedoKANM.tif", mapx, mapy);
 [Xb, Yb] = meshgrid(xb, yb);
@@ -56,7 +56,7 @@ text(ax2, min(mapx)+100, max(mapy)-300, 'b) S2', 'FontSize',12);
 xlim(ax2, [min(mapx), max(mapx)])
 ylim(ax2, [min(mapy), max(mapy)])
 set(gca,'TickDir','out');
-
+scalebarpsn('location','se');
 
 ax1.XAxis.Exponent = 0;
 ax1.YAxis.Exponent = 0;
@@ -70,7 +70,7 @@ ax2.YAxis.TickLabelFormat = '%.0f';
 t.TileSpacing = 'compact';
 t.Padding = 'compact';
 
-exportgraphics(t, 'KANalbedo.jpg', 'Resolution',300);
+exportgraphics(t, 'KANalbedo.jpeg', 'Resolution',300);
 % exportgraphics(t, 'KANalbedo.pdf', 'Resolution',300);
 
 %% Derive statistics from GLCM and Plot
@@ -168,7 +168,7 @@ grid on
 t.TileSpacing = 'compact';
 t.Padding = 'compact';
 
-exportgraphics(t, 'KANglcms.jpg', 'Resolution',300);
+exportgraphics(t, 'KANglcms.jpeg', 'Resolution',300);
 % exportgraphics(t, 'KANglcms.pdf', 'Resolution',300);
 
 %% statistics of the homogeneity 
