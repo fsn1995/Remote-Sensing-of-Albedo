@@ -5,8 +5,8 @@
 
 This is a github repo for remote sensing of ice/snow albedo using Google Earth Engine.
 It is part of two studies:
-1. Remote sensing of ice albedo on the GrIS]{Long time series (1984-2020) of albedo variations on the Greenland Ice Sheet from harmonized Landsat and Sentinel 2 imagery. The manuscript is accepted in Journal of Glaciology and will be available shortly. 
-2. Remote sensing of ice albedo using harmonized Landsat and Sentinel 2 datasets: Validation. The manuscript is about to be submitted for peer review. 
+1. <div class="csl-entry">Feng, S., Cook, J. M., Anesio, A. M., Benning, L. G., &#38; Tranter, M. (2023). Long time series (1984–2020) of albedo variations on the Greenland ice sheet from harmonized Landsat and Sentinel 2 imagery. <i>Journal of Glaciology</i>, 1–16. https://doi.org/10.1017/jog.2023.11</div>
+2. Remote sensing of ice albedo using harmonized Landsat and Sentinel 2 datasets: Validation. The manuscript is submitted for peer review. 
 
 Paper 1 focuses on the development of data harmonization and narrow to broad band conversion algorithm optimized for the ablation zone in the Greenland Ice Sheet. The harmonized satellite albedo (HSA) is further validated globally using AWS albedo measurements in paper 2. It also provides a complete workflow of validating remote sensing derived product with groundtruth measurements. 
 
@@ -118,6 +118,35 @@ date_end = ee.Date.fromYMD(2015, 8, 15)
 Then user could make a publication ready map by QGIS. 
 Congrats! 
 
+## Citation
+### Publication
+```
+@article{HSAJOGpaper2023,
+   author = {Shunan Feng and Joseph Mitchell Cook and Alexandre Magno Anesio and Liane G. Benning and Martyn Tranter},
+   doi = {10.1017/jog.2023.11},
+   issn = {0022-1430},
+   journal = {Journal of Glaciology},
+   month = {3},
+   pages = {1-16},
+   title = {Long time series (1984–2020) of albedo variations on the Greenland ice sheet from harmonized Landsat and Sentinel 2 imagery},
+   year = {2023},
+}
+```
+Paper 2 is currently under review and will be updated once it's available. 
+### Harmonized Satellite Albedo Product
+Note: The doi number is provided by zenodo to cite all versions and will always resolve to the latest one. However, it may be different from the doi number in the publication as those were citing a specific version. 
+```
+@generic{hsajog,
+   author = {Shunan Feng and Joseph M Cook},
+   doi = {10.5281/zenodo.7642574},
+   month = {2},
+   publisher = {Zenodo},
+   title = {Remote-Sensing-of-Albedo: Development of harmonized satellite albedo},
+   url = {https://doi.org/10.5281/zenodo.7642574},
+   year = {2023},
+}
+
+```
 
 ## Directory Structure
 
@@ -208,12 +237,3 @@ This project is organized into three main directories. `geemap` contains the jav
    
 ```
 
-## Citation
-### Publication
-<!-- ```
-
-``` -->
-Paper 1 is now accepted and will be available shortly in Journal of Glaciology.
-Paper 2 is currently under review and will be updated once it's available. 
-### Data
-Note: The doi number is provided by zenodo to cite all versions and will always resolve to the latest one. However, it may be different from the doi number in the publication as those were citing a specific version. 
