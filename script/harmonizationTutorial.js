@@ -19,7 +19,7 @@ shunan.feng@envs.au.dk
  */
 
 var date_start = ee.Date.fromYMD(1984, 1, 1);
-var date_end = date_end = ee.Date(Date.now());
+var date_end = ee.Date(Date.now());
 
 // var aoi = ee.Geometry.Point([-49.3476433532785, 67.0775206116519]);
 var aoi = ee.Geometry.Point([-48.8355, 67.0670]); // change your coordinate here
