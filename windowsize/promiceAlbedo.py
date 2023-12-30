@@ -412,7 +412,7 @@ for i in range(len(df.Station)):
                     .map(prepEtm) \
                     .select(['Blue', 'Green', 'Red', 'NIR', 'visnirAlbedo']) \
                     .map(landsatStdDev)
-        s2Col = ee.ImageCollection('COPERNICUS/S2_SR') \
+        s2Col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
                     .filter(s2colFilter) \
                     .map(prepS2) \
                     .select(['Blue', 'Green', 'Red', 'NIR', 'visnirAlbedo']) \

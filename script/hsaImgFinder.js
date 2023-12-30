@@ -1,14 +1,10 @@
 /*
-This tutorial is made to demonstrate the workflow of harmonizing Landsat 4-7 and Sentinel 2 to Landsat 8 
-time series of datasets.
-It will display the charts of the harmonized satellite albedo (All Observations) and original albedo 
-(All Observations Original).
-The linear trendline will be plotted on a separate chart. 
+This script is used to find harmonized satellite images for a given area of interest (AOI) and time period.
+The AOI is defined by a bounding box (BBox).
+Users can also export harmonized satellite image and the harmonized satellite albedo (HSA) to their Google Drive.
 
-ref:
-This script is adapted from the excellent tutorial made by Justin Braaten.
-https://github.com/jdbcode
-https://developers.google.com/earth-engine/tutorials/community/landsat-etm-to-oli-harmonization
+NOTE: You will need to change the land mask if you are looking for images outside Greenland.
+NOTE: You will need to change the CRS before exporting your images.
 
 Shunan Feng
 shunan.feng@envs.au.dk
@@ -17,17 +13,20 @@ shunan.feng@envs.au.dk
 /**
  * Intial parameters
  */
+// define your AOI here
+var aoi = ee.Geometry.BBox(-50.40709020668755, 66.93869655503401,	-49.2562723355938, 67.241807971802); //west, south, east, north
+// define your time period here
+var date_start = ee.Date.fromYMD(2023, 8, 14);
+var date_end = ee.Date.fromYMD(2023, 8, 16);
 
-var date_start = ee.Date.fromYMD(1984, 1, 1);
-var date_end = ee.Date(Date.now());
 
-// var aoi = ee.Geometry.Point([-49.3476433532785, 67.0775206116519]);
-var aoi = ee.Geometry.Point([-48.8355, 67.0670]); // change your coordinate here
+var greenlandmask = ee.Image('OSU/GIMP/2000_ICE_OCEAN_MASK')
+                      .select('ice_mask').eq(1); //'ice_mask', 'ocean_mask'
 
 // Display AOI on the map.
-Map.centerObject(aoi, 4);
+Map.centerObject(aoi, 10);
 Map.addLayer(aoi, {color: 'f8766d'}, 'AOI');
-Map.setOptions('HYBRID');
+// Map.setOptions('HYBRID');
 
 
 /*
@@ -266,198 +265,76 @@ var colFilter = ee.Filter.and(
 var s2colFilter =  ee.Filter.and(
   ee.Filter.bounds(aoi),
   ee.Filter.date(date_start, date_end),
-  // ee.Filter.calendarRange(6, 8, 'month'),
-  ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50)
+  // ee.Filter.calendarRange(6, 7, 'month'),
+  // ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50),
+  ee.Filter.lt('MEAN_SOLAR_ZENITH_ANGLE', 76)
 );
 
 var oli2Col = ee.ImageCollection('LANDSAT/LC09/C02/T1_L2') 
               .filter(colFilter) 
               .map(prepOli2)
-              .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
+              .select(['Blue', 'Green', 'Red', 'NIR', 'SWIR1','SWIR2','visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 var oliCol = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2') 
               .filter(colFilter) 
               .map(prepOli)
-              .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
+              .select(['Blue', 'Green', 'Red', 'NIR', 'SWIR1','SWIR2','visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 var etmCol = ee.ImageCollection('LANDSAT/LE07/C02/T1_L2') 
             .filter(colFilter) 
             .filter(ee.Filter.calendarRange(1999, 2020, 'year')) // filter out L7 imagaes acquired after 2020 due to orbit drift
             .map(prepEtm)
-            .select(['visnirAlbedo']); // # .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
+            .select(['Blue', 'Green', 'Red', 'NIR', 'SWIR1','SWIR2','visnirAlbedo']); // # .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 var tmCol = ee.ImageCollection('LANDSAT/LT05/C02/T1_L2') 
             .filter(colFilter) 
             .map(prepTm)
-            .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
+            .select(['Blue', 'Green', 'Red', 'NIR', 'SWIR1','SWIR2','visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 var tm4Col = ee.ImageCollection('LANDSAT/LT04/C02/T1_L2') 
             .filter(colFilter) 
             .map(prepTm)
-            .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
+            .select(['Blue', 'Green', 'Red', 'NIR', 'SWIR1','SWIR2','visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 var s2Col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') 
             .linkCollection(csPlus, [QA_BAND])
             .filter(s2colFilter) 
             .map(prepS2)
-            .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
+            .select(['Blue', 'Green', 'Red', 'NIR', 'SWIR1','SWIR2','visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 
 var landsatCol = oliCol.merge(etmCol).merge(tmCol).merge(tm4Col).merge(oli2Col);
 var multiSat = landsatCol.merge(s2Col).sort('system:time_start', true); // Sort chronologically in descending order.
   
-// prepare the chart of harmonized satellite albedo
-var allObs = multiSat.map(function(img) {
-  var obs = img.reduceRegion(
-      {geometry: aoi, 
-      reducer: ee.Reducer.median(), 
-      scale: 30});
-  return img.set('visnirAlbedo', obs.get('visnirAlbedo'));
+print(multiSat);
+var imgHSA = multiSat.mean().clip(aoi).updateMask(greenlandmask);
+var visParam = {min:0, max:1, bands:['Red', 'Green', 'Blue']};
+Map.addLayer(imgHSA, visParam, 'img');
+              
+
+var palettes = require('users/gena/packages:palettes');
+var blue_fluorite = palettes.misc.BlueFluorite[256];
+var visHSA = {min: 0, max: 1, palette: blue_fluorite};
+
+Map.addLayer(imgHSA.select('visnirAlbedo'), visHSA, 'albedo');
+
+var map_id_dict =imgHSA.select('visnirAlbedo').getMap(visHSA);
+print(map_id_dict);
+
+
+// Export the image, specifying the CRS, transform, and region.
+Export.image.toDrive({
+  image: imgHSA.select(['Blue', 'Green', 'Red', 'NIR', 'SWIR1','SWIR2']),
+  description: 'dp19sat20230815',
+  folder:'export',
+  scale:30,
+  crs: 'EPSG:32622', // change your CRS here
+  // crsTransform: projection.transform,
+  region: aoi
 });
 
-var allObsValid = allObs.filter(ee.Filter.lt('visnirAlbedo', 1));
-var chartAllObs =
-  ui.Chart.feature.groups(allObsValid, 'system:time_start', 'visnirAlbedo', 'SATELLITE')
-      .setChartType('ScatterChart')
-      // .setSeriesNames(['TM', 'ETM+', 'OLI', 'S2'])
-      .setOptions({
-        title: 'All Harmonized Observations',
-        colors: ['f8766d', '00ba38', '619cff', '8934eb', 'cf513e'],
-        hAxis: {title: 'Date'},
-        vAxis: {title: 'visnirAlbedo', viewWindow: {min: 0, max: 1}},
-        pointSize: 6,
-        dataOpacity: 0.5
-      });
-print(chartAllObs);
 
-var chartAllObsTrend = ui.Chart.image.series({
-  imageCollection: multiSat,
-  region: aoi,
-  reducer: ee.Reducer.median(),
+// Export the image, specifying the CRS, transform, and region.
+Export.image.toDrive({
+  image: imgHSA.select('visnirAlbedo'),
+  description: 'hsa20230815',
+  folder:'export',
   scale:30,
-  xProperty:'system:time_start'
-}).setChartType('ScatterChart')
-  .setOptions({
-    title: 'All Harmonized Observations with Trendline',
-    hAxis: {title: 'Date'},
-    vAxis: {title: 'visnirAlbedo', viewWindow: {min: 0, max: 1}},
-    pointSize: 6,
-    dataOpacity: 0.5,
-    trendlines: {0:{color:'black'}}
-  });
-print(chartAllObsTrend);
-
-/*
-Make a new chart for the original dataset. 
-*/
-// Define function to prepare OLI images.
-function prepOli2Ori(img) {
-  var orig = img;
-  img = renameOli(img);
-  img = maskL8sr(img);
-  img = imRangeFilter(img);
-  img = addVisnirAlbedo(img);
-  return ee.Image(img.copyProperties(orig, orig.propertyNames()).set('SATELLITE', 'LANDSAT_9'));
-}
-// Define function to prepare OLI images.
-function prepOliOri(img) {
-  var orig = img;
-  img = renameOli(img);
-  img = maskL8sr(img);
-  img = imRangeFilter(img);
-  img = addVisnirAlbedo(img);
-  return ee.Image(img.copyProperties(orig, orig.propertyNames()).set('SATELLITE', 'LANDSAT_8'));
-}
-// Define function to prepare ETM+ images.
-function prepEtmOri(img) {
-  var orig = img;
-  img = renameEtm(img);
-  img = maskL457sr(img);
-  img = imRangeFilter(img);
-  img = addVisnirAlbedo(img);
-  return ee.Image(img.copyProperties(orig, orig.propertyNames()).set('SATELLITE', 'LANDSAT_7'));
-}
-// Define function to prepare TM images.
-function prepTmOri(img) {
-  var orig = img;
-  img = renameEtm(img);
-  img = maskL457sr(img);
-  img = imRangeFilter(img);
-  img = addVisnirAlbedo(img);
-  return ee.Image(img.copyProperties(orig, orig.propertyNames()).set('SATELLITE', 'LANDSAT_4/5'));
-}
-// Define function to prepare S2 images.
-function prepS2Ori(img) {
-  var orig = img;
-  img = renameS2(img);
-  img = maskS2sr(img);
-  img = imRangeFilter(img);
-  img = addVisnirAlbedo(img);
-  return ee.Image(img.copyProperties(orig, orig.propertyNames()).set('SATELLITE', 'SENTINEL_2'));
-}
-
-var oli2ColOri = ee.ImageCollection('LANDSAT/LC09/C02/T1_L2') 
-              .filter(colFilter) 
-              .map(prepOli2Ori)
-              .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
-var oliColOri = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2') 
-              .filter(colFilter) 
-              .map(prepOliOri)
-              .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
-var etmColOri = ee.ImageCollection('LANDSAT/LE07/C02/T1_L2') 
-            .filter(colFilter) 
-            .filter(ee.Filter.calendarRange(1999, 2020, 'year')) // filter out L7 imagaes acquired after 2020 due to orbit drift
-            .map(prepEtmOri)
-            .select(['visnirAlbedo']); // # .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
-var tmColOri = ee.ImageCollection('LANDSAT/LT05/C02/T1_L2') 
-            .filter(colFilter) 
-            .map(prepTmOri)
-            .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
-var tm4ColOri = ee.ImageCollection('LANDSAT/LT04/C02/T1_L2') 
-            .filter(colFilter) 
-            .map(prepTmOri)
-            .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
-var s2ColOri = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') 
-            .linkCollection(csPlus, [QA_BAND])
-            .filter(s2colFilter) 
-            .map(prepS2Ori)
-            .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
-
-var landsatColOri = oliColOri.merge(etmColOri).merge(tmColOri).merge(tm4ColOri).merge(oli2ColOri);
-var multiSatOri = landsatColOri.merge(s2ColOri).sort('system:time_start', true); // Sort chronologically in descending order.
-  
-
-var allObsOri = multiSatOri.map(function(img) {
-  var obs = img.reduceRegion(
-      {geometry: aoi, 
-      reducer: ee.Reducer.median(), 
-      scale: 30});
-  return img.set('visnirAlbedo', obs.get('visnirAlbedo'));
+  crs: 'EPSG:32622', // change your CRS here
+  // crsTransform: projection.transform,
+  region: aoi
 });
-
-var allObsOriValid = allObsOri.filter(ee.Filter.lt('visnirAlbedo', 1));
-var chartAllObsOri =
-  ui.Chart.feature.groups(allObsOriValid, 'system:time_start', 'visnirAlbedo', 'SATELLITE')
-      .setChartType('ScatterChart')
-      // .setSeriesNames(['TM', 'ETM+', 'OLI', 'S2'])
-      .setOptions({
-        title: 'All Observations Original',
-        colors: ['f8766d', '00ba38', '619cff', '8934eb', 'cf513e'],
-        hAxis: {title: 'Date'},
-        vAxis: {title: 'visnirAlbedo', viewWindow: {min: 0, max: 1}},
-        pointSize: 6,
-        dataOpacity: 0.5
-      });
-print(chartAllObsOri);
-
-var chartAllObsOriTrend = ui.Chart.image.series({
-  imageCollection: multiSatOri,
-  region: aoi,
-  reducer: ee.Reducer.median(),
-  scale:30,
-  xProperty:'system:time_start'
-}).setChartType('ScatterChart')
-  // .setSeriesNames('visnirAlbedo')
-  .setOptions({
-    title: 'All Observations Original with Trendline',
-    hAxis: {title: 'Date'},
-    vAxis: {title: 'visnirAlbedo', viewWindow: {min: 0, max: 1}},
-    pointSize: 6,
-    dataOpacity: 0.5,
-    trendlines: {0:{color:'black'}}
-  });
-print(chartAllObsOriTrend);

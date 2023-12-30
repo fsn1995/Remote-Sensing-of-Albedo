@@ -136,7 +136,7 @@ var oli2Col = ee.ImageCollection("LANDSAT/LC09/C02/T1_L2")
 // var tmCol = ee.ImageCollection('LANDSAT/LT05/C01/T1_SR')
 //             .filter(colFilter)
 //             .map(prepEtm);
-// var s2Col = ee.ImageCollection('COPERNICUS/S2_SR')
+// var s2Col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
 //             .filter(s2colFilter)
 //             .map(prepS2);
 

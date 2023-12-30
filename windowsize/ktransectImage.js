@@ -203,7 +203,7 @@ var vis = {min: 0, max: 1, palette: blue_fluorite};
 
 
 var l8img = prepOli(ee.Image('LANDSAT/LC08/C02/T1_L2/LC08_007013_20200721')).updateMask(greenlandmask);
-var s2img = prepS2(ee.Image('COPERNICUS/S2_SR/20200721T144921_20200721T144924_T22WEV')).updateMask(greenlandmask);
+var s2img = prepS2(ee.Image('COPERNICUS/S2_SR_HARMONIZED/20200721T144921_20200721T144924_T22WEV')).updateMask(greenlandmask);
 
 // Compute standard deviation (SD) as texture of the NDVI.
 var l8texture = l8img.select('visnirAlbedo').reduceNeighborhood({

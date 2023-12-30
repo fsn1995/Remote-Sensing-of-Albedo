@@ -247,7 +247,7 @@ tm4Col = ee.ImageCollection('LANDSAT/LT04/C02/T1_L2') \
             .filter(colFilter) \
             .map(prepEtm) \
             .select(['visnirAlbedo']) # .select(['totalAlbedo']) or  .select(['viznirAlbedo'])
-s2Col = ee.ImageCollection('COPERNICUS/S2_SR') \
+s2Col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
             .filter(s2colFilter) \
             .map(prepS2) \
             .select(['visnirAlbedo']) # .select(['totalAlbedo']) or  .select(['viznirAlbedo'])

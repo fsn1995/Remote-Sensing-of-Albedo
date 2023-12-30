@@ -233,7 +233,7 @@ var oliCol = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
                 .map(prepOli);
                 // .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
 
-var s2Col = ee.ImageCollection('COPERNICUS/S2_SR') 
+var s2Col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') 
             .filter(s2colFilter) 
             .map(prepS2);
             // .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])

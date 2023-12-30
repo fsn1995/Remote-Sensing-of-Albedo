@@ -5,8 +5,8 @@
 
 This is a github repo for remote sensing of ice/snow albedo using Google Earth Engine.
 It is part of two studies:
-1. <div class="csl-entry">Feng, S., Cook, J. M., Anesio, A. M., Benning, L. G., &#38; Tranter, M. (2023). Long time series (1984–2020) of albedo variations on the Greenland ice sheet from harmonized Landsat and Sentinel 2 imagery. <i>Journal of Glaciology</i>, 1–16. https://doi.org/10.1017/jog.2023.11</div>
-2. Remote sensing of ice albedo using harmonized Landsat and Sentinel 2 datasets: Validation. The manuscript is submitted for peer review. 
+1. Feng, S., Cook, J. M., Anesio, A. M., Benning, L. G., & Tranter, M. (2023). Long time series (1984–2020) of albedo variations on the Greenland ice sheet from harmonized Landsat and Sentinel 2 imagery. Journal of Glaciology, 69(277), 1225–1240. [https://doi.org/10.1017/jog.2023.11](https://doi.org/10.1017/jog.2023.11).
+2. Feng, S., Cook, J. M., Onuma, Y., Naegeli, K., Tan, W., Anesio, A. M., Benning, L. G., & Tranter, M. (2023). Remote sensing of ice albedo using harmonized Landsat and Sentinel 2 datasets: validation. International Journal of Remote Sensing, 00(00), 1–29. [https://doi.org/10.1080/01431161.2023.2291000](https://doi.org/10.1080/01431161.2023.2291000).
 
 Paper 1 focuses on the development of data harmonization and narrow to broad band conversion algorithm optimized for the ablation zone in the Greenland Ice Sheet. The harmonized satellite albedo (HSA) is further validated globally using AWS albedo measurements in paper 2. It also provides a complete workflow of validating remote sensing derived product with groundtruth measurements. 
 
@@ -23,6 +23,12 @@ This repository relates to the harmonization of Landsat and Sentinel-2 data and 
 Here is a simple tutorial that demonstrates the importance of harmonizing Landsat 4-7, 9 and Sentinel 2 to Landsat 8 time series of datasets.
 It will display the charts of the harmonized satellite albedo (All Observations) and original albedo (All Observations Original).
 The linear trendline will be plotted on a separate chart. 
+It can be used to determine whether data harmonziation is necessary or not, and to extract the time series of albedo at a specific location.
+
+-[script/hsaImgFinder.js](script\hsaImgFinder.js)
+
+This is a simple tutorial that demonstrates how to find the harmonized satellite albedo image for a specific date and location.
+It will display the rgb and albedo image. It supports exporting the image to Google Drive as well.
 
 <img src="media\harmonization.png" alt="harmonization" height=800/>
 
@@ -183,7 +189,8 @@ This project is organized into three main directories. `geemap` contains the jav
 |   |   darkzone.ipynb
 |   |   darkzonePoint.ipynb
 |   |   geopyfsn.py
-|   |   harmonizationTutorial.js        
+|   |   harmonizationTutorial.js       
+|   |   hsaImgFinder.js 
 |   |   L7ToL8.js
 |   |   L9ToL8.js
 |   |   Promice vs satellite modis.ipynb

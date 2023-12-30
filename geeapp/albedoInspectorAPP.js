@@ -63,8 +63,8 @@ function renameEtm(img) {
 // Function to get and rename bands of interest from Sentinel 2.
 function renameS2(img) {
   return img.select(
-    ['B2',   'B3',    'B4',  'B8',  'QA60', 'SCL'],
-    ['Blue', 'Green', 'Red', 'NIR', 'QA60', 'SCL']
+    ['B2',   'B3',    'B4',  'B8',  'QA60', 'SCL', QA_BAND],
+    ['Blue', 'Green', 'Red', 'NIR', 'QA60', 'SCL', QA_BAND]
     //['B2',     'B3',      'B4',    'B8',    'B11',     'B12',     'QA60', 'SCL'],
     //['BlueS2', 'GreenS2', 'RedS2', 'NIRS2', 'SWIR1S2', 'SWIR2S2', 'QA60', 'SCL']
   );
@@ -163,21 +163,44 @@ function maskL457sr(image) {
  * Function to mask clouds using the Sentinel-2 QA band
  * @param {ee.Image} image Sentinel-2 image
  * @return {ee.Image} cloud masked Sentinel-2 image
+ * archived after updating to Cloud Score+
  */
-function maskS2sr(image) {
-  var qa = image.select('QA60');
+// function maskS2sr(image) {
+//   var qa = image.select('QA60');
 
-  // Bits 10 and 11 are clouds and cirrus, respectively.
-  var cloudBitMask = 1 << 10;
-  var cirrusBitMask = 1 << 11;
+//   // Bits 10 and 11 are clouds and cirrus, respectively.
+//   var cloudBitMask = 1 << 10;
+//   var cirrusBitMask = 1 << 11;
+//   // 1 is saturated or defective pixel
+//   var not_saturated = image.select('SCL').neq(1);
+//   // Both flags should be set to zero, indicating clear conditions.
+//   var mask = qa.bitwiseAnd(cloudBitMask).eq(0)
+//       .and(qa.bitwiseAnd(cirrusBitMask).eq(0));
+
+//   // return image.updateMask(mask).updateMask(not_saturated);
+//   return image.updateMask(mask).updateMask(not_saturated).divide(10000);
+// }
+
+/**
+ * Function to mask clouds using the Cloud Score+
+ */
+// Cloud Score+ image collection. Note Cloud Score+ is produced from Sentinel-2
+// Level 1C data and can be applied to either L1C or L2A collections.
+var csPlus = ee.ImageCollection('GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED');
+
+// Use 'cs' or 'cs_cdf', depending on your use case; see docs for guidance.
+var QA_BAND = 'cs'; // I find'cs' is better than 'cs_cdf' because it is more robust but may mask out more clear pixels.
+
+// The threshold for masking; values between 0.50 and 0.65 generally work well.
+// Higher values will remove thin clouds, haze & cirrus shadows.
+var CLEAR_THRESHOLD = 0.65;
+
+function maskS2sr(image) {
   // 1 is saturated or defective pixel
   var not_saturated = image.select('SCL').neq(1);
-  // Both flags should be set to zero, indicating clear conditions.
-  var mask = qa.bitwiseAnd(cloudBitMask).eq(0)
-      .and(qa.bitwiseAnd(cirrusBitMask).eq(0));
-
-  // return image.updateMask(mask).updateMask(not_saturated);
-  return image.updateMask(mask).updateMask(not_saturated).divide(10000);
+  return image.updateMask(image.select(QA_BAND).gte(CLEAR_THRESHOLD))
+              .updateMask(not_saturated)
+              .divide(10000);
 }
 
 // narrow to broadband conversion
@@ -342,7 +365,8 @@ var generateChart = function (coords) {
     ee.Filter.bounds(point),
     ee.Filter.date(date_start, date_end),
     // ee.Filter.calendarRange(6, 7, 'month'),
-    ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50)
+    // ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50),
+    ee.Filter.lt('MEAN_SOLAR_ZENITH_ANGLE', 76)
   );
   
   var oli2Col = ee.ImageCollection('LANDSAT/LC09/C02/T1_L2') 
@@ -369,6 +393,7 @@ var generateChart = function (coords) {
               .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
   var s2Col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') 
               .filter(s2colFilter) 
+              .linkCollection(csPlus, [QA_BAND])
               .map(prepS2)
               .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
   
@@ -592,7 +617,8 @@ var loadComposite = function() {
       ee.Filter.bounds(aoi),
       ee.Filter.date(startDate, endDate),
       // ee.Filter.calendarRange(6, 7, 'month'),
-      ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50)
+      // ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50),
+      ee.Filter.lt('MEAN_SOLAR_ZENITH_ANGLE', 76)
     );
 
     var oli2Col = ee.ImageCollection('LANDSAT/LC09/C02/T1_L2') 
@@ -618,6 +644,7 @@ var loadComposite = function() {
                 .map(prepEtm);
                 // .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
     var s2Col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') 
+                .linkCollection(csPlus, [QA_BAND])
                 .filter(s2colFilter) 
                 .map(prepS2);
                 // .select(['visnirAlbedo']); //# .select(['totalAlbedo']) or  .select(['visnirAlbedo'])
@@ -683,9 +710,10 @@ var logoPanel = ui.Panel(thumb, 'flow', {width: '120px'});
 inspectorPanel.widgets().set(6, logoPanel);
 
 var logoIntro = ui.Panel([
-  ui.Label("The Deep Purple project receives funding from the European Research Council (ERC) under the European Union's Horizon 2020 research and innovation programme under grant agreement No 856416. This study is currently under review."),
+  ui.Label("The Deep Purple project receives funding from the European Research Council (ERC) under the European Union's Horizon 2020 research and innovation programme under grant agreement No 856416."),
   ui.Label("https://www.deeppurple-ercsyg.eu/home", {}, "https://www.deeppurple-ercsyg.eu/home"),
   ui.Label("https://github.com/fsn1995/Remote-Sensing-of-Albedo", {}, "https://github.com/fsn1995/Remote-Sensing-of-Albedo"),
-  ui.Label("Feng, S., Cook, J. M., Anesio, A. M., Benning, L. G. and Tranter, M. (2023) “Long time series (1984–2020) of albedo variations on the Greenland ice sheet from harmonized Landsat and Sentinel 2 imagery,” Journal of Glaciology. Cambridge University Press, pp. 1–16. doi: 10.1017/jog.2023.11.", {}, "https://doi.org/10.1017/jog.2023.11")
+  ui.Label("Feng, S., Cook, J. M., Anesio, A. M., Benning, L. G. and Tranter, M. (2023) “Long time series (1984–2020) of albedo variations on the Greenland ice sheet from harmonized Landsat and Sentinel 2 imagery,” Journal of Glaciology. Cambridge University Press, 69(277), pp. 1225–1240. doi: 10.1017/jog.2023.11.", {}, "https://doi.org/10.1017/jog.2023.11"),
+  ui.Label("Feng, S., Cook, J. M., Onuma, Y., Naegeli, K., Tan, W., Anesio, A. M., Benning, L. G., & Tranter, M. (2023). Remote sensing of ice albedo using harmonized Landsat and Sentinel 2 datasets: validation. International Journal of Remote Sensing, 00(00), 1–29. https://doi.org/10.1080/01431161.2023.2291000", {}, "https://doi.org/10.1080/01431161.2023.2291000")
 ]);
 inspectorPanel.widgets().set(7, logoIntro);

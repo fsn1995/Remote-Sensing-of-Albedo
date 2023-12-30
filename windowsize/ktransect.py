@@ -309,7 +309,7 @@ oliCol = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2') \
             .map(landsatStdDev) \
             .sort('system:time_start', True) 
 
-s2Col = ee.ImageCollection('COPERNICUS/S2_SR') \
+s2Col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
             .filter(s2colFilter) \
             .map(prepS2) \
             .select(['visnirAlbedo']) \
