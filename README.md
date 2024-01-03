@@ -25,7 +25,7 @@ It will display the charts of the harmonized satellite albedo (All Observations)
 The linear trendline will be plotted on a separate chart. 
 It can be used to determine whether data harmonziation is necessary or not, and to extract the time series of albedo at a specific location.
 
--[script/hsaImgFinder.js](script\hsaImgFinder.js)
+-[script/hsaImgFinder.js](script/hsaImgFinder.js)
 
 This is a simple tutorial that demonstrates how to find the harmonized satellite albedo image for a specific date and location.
 It will display the rgb and albedo image. It supports exporting the image to Google Drive as well.
